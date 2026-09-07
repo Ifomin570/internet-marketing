@@ -1,0 +1,3366 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Разработка стратегии интернет-маркетинга — ДУП.05</title>
+
+<style>
+:root{
+  --red:#e3262e;
+  --red2:#ff4b52;
+  --dark:#17171a;
+  --muted:#6d6d73;
+  --bg:#f7f7f5;
+  --card:#ffffff;
+  --line:#e9e9e7;
+  --soft:#fff1f1;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+html,body{
+  margin:0;
+  width:100%;
+  height:100%;
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  background:#111;
+  color:var(--dark);
+  overflow:hidden;
+}
+
+body{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.deck{
+  width:100vw;
+  height:100vh;
+  position:relative;
+  background:var(--bg);
+}
+
+/* ---------- СЛАЙДЫ ---------- */
+
+.slide{
+  display:none;
+  width:100%;
+  height:100%;
+  padding:6vh 7vw 7vh;
+  position:relative;
+  overflow:auto;
+}
+
+.slide.active{
+  display:flex;
+  flex-direction:column;
+}
+
+.slide:before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:7px;
+  background:var(--red);
+}
+
+/* ---------- ТИПОГРАФИКА ---------- */
+
+.kicker{
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:.16em;
+  font-weight:800;
+  color:var(--red);
+  margin-bottom:12px;
+}
+
+h1{
+  font-size:clamp(42px,5.5vw,86px);
+  line-height:.98;
+  margin:0 0 22px;
+  letter-spacing:-.045em;
+}
+
+h2{
+  font-size:clamp(32px,4vw,58px);
+  line-height:1.02;
+  margin:0 0 26px;
+  letter-spacing:-.035em;
+}
+
+h3{
+  font-size:20px;
+  margin:0 0 9px;
+}
+
+p{
+  font-size:19px;
+  line-height:1.5;
+  color:#36363b;
+  max-width:1100px;
+}
+
+.lead{
+  font-size:clamp(20px,2vw,30px);
+  line-height:1.35;
+  color:#4a4a50;
+  max-width:1000px;
+}
+
+.red{
+  color:var(--red);
+}
+
+.muted{
+  color:var(--muted);
+}
+
+/* ---------- СЕТКИ ---------- */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:10px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:16px;
+  margin-top:10px;
+}
+
+/* ---------- КАРТОЧКИ ---------- */
+
+.card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:22px;
+  box-shadow:0 10px 30px rgba(20,20,20,.045);
+}
+
+.card strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:7px;
+}
+
+.card p{
+  font-size:16px;
+  margin:0;
+}
+
+.num{
+  font-size:12px;
+  font-weight:900;
+  color:var(--red);
+  letter-spacing:.12em;
+}
+
+/* ---------- ЦИТАТА ---------- */
+
+.bigquote{
+  border-left:6px solid var(--red);
+  padding:8px 0 8px 24px;
+  font-size:clamp(25px,3vw,43px);
+  line-height:1.18;
+  font-weight:800;
+  max-width:1100px;
+  margin-top:20px;
+}
+
+/* ---------- FLOW ---------- */
+
+.flow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.flow span{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:13px 17px;
+  font-weight:800;
+}
+
+.arrow{
+  color:var(--red);
+  font-weight:900;
+}
+
+/* ---------- HERO ---------- */
+
+.hero{
+  justify-content:center!important;
+
+  background:
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(227,38,46,.13),
+      transparent 27%
+    ),
+    linear-gradient(
+      135deg,
+      #fff 0%,
+      #f7f7f5 62%,
+      #fff 100%
+    );
+}
+
+.hero .mark{
+  position:absolute;
+  right:7vw;
+  bottom:7vh;
+  width:230px;
+  height:230px;
+  border-radius:50%;
+  background:var(--red);
+  opacity:.96;
+}
+
+.hero .mark:after{
+  content:"STRATEGY";
+  position:absolute;
+  color:#fff;
+  font-weight:900;
+  font-size:23px;
+  letter-spacing:.08em;
+  transform:rotate(-45deg);
+  left:35px;
+  top:101px;
+}
+
+.hero .meta{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:25px;
+}
+
+.pill{
+  border:1px solid #ddd;
+  border-radius:999px;
+  padding:10px 14px;
+  background:#fff;
+  font-weight:700;
+}
+
+/* ---------- ДВЕ КОЛОНКИ ---------- */
+
+.two{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:30px;
+  align-items:start;
+}
+
+/* ---------- CALLOUT ---------- */
+
+.callout{
+  background:var(--red);
+  color:#fff;
+  border-radius:28px;
+  padding:28px;
+}
+
+.callout h3,
+.callout p{
+  color:#fff;
+}
+
+.callout p{
+  margin:0;
+  font-size:17px;
+}
+
+/* ---------- CHECKLIST ---------- */
+
+.checklist{
+  display:grid;
+  gap:12px;
+  margin-top:8px;
+}
+
+.item{
+  display:flex;
+  gap:13px;
+  align-items:flex-start;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px 16px;
+  font-size:17px;
+  line-height:1.4;
+}
+
+.item b{
+  color:var(--red);
+}
+
+/* ---------- BADGE ---------- */
+
+.badge{
+  display:inline-block;
+  background:#fff0f0;
+  color:var(--red);
+  border-radius:10px;
+  padding:7px 10px;
+  font-weight:800;
+  font-size:13px;
+}
+
+/* ---------- TABLE ---------- */
+
+table{
+  border-collapse:collapse;
+  width:100%;
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--line);
+  font-size:16px;
+}
+
+td,
+th{
+  padding:13px 15px;
+  border-bottom:1px solid var(--line);
+  text-align:left;
+}
+
+th{
+  background:#fff5f5;
+  color:var(--red);
+}
+
+/* ---------- SECTION ---------- */
+
+.section{
+  background:
+    linear-gradient(
+      135deg,
+      #fff 0%,
+      #fff1f1 100%
+    );
+
+  justify-content:center!important;
+}
+
+.section-number{
+  font-size:100px;
+  font-weight:900;
+  color:var(--red);
+  line-height:.9;
+  margin-bottom:15px;
+}
+
+/* ---------- ДЗ ---------- */
+
+.dz{
+  background:
+    linear-gradient(
+      135deg,
+      #fff 0%,
+      #fff1f1 100%
+    );
+
+  border:2px solid #ffd4d4;
+}
+
+/* ---------- FOOTER ---------- */
+
+footer{
+  position:absolute;
+  bottom:22px;
+  left:7vw;
+  right:7vw;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  color:#8a8a8e;
+  font-size:12px;
+  pointer-events:none;
+}
+
+footer .bar{
+  width:120px;
+  height:4px;
+  background:#ddd;
+  border-radius:4px;
+  overflow:hidden;
+}
+
+footer .bar i{
+  display:block;
+  height:100%;
+  background:var(--red);
+  width:0;
+}
+
+/* ---------- CONTROLS ---------- */
+
+.controls{
+  position:fixed;
+  right:24px;
+  bottom:20px;
+  z-index:20;
+  display:flex;
+  gap:8px;
+}
+
+button{
+  border:1px solid #ddd;
+  background:#fff;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:18px;
+  cursor:pointer;
+  box-shadow:0 5px 18px rgba(0,0,0,.08);
+}
+
+button:hover{
+  border-color:var(--red);
+  color:var(--red);
+}
+
+/* ---------- MOBILE ---------- */
+
+@media(max-width:800px){
+
+  .slide{
+    padding:7vh 5vw 8vh;
+  }
+
+  .grid,
+  .grid3,
+  .two{
+    grid-template-columns:1fr;
+  }
+
+  .card{
+    padding:16px;
+  }
+
+  .hero .mark{
+    width:140px;
+    height:140px;
+    right:5vw;
+    bottom:8vh;
+  }
+
+  .hero .mark:after{
+    font-size:14px;
+    left:24px;
+    top:60px;
+  }
+
+  p{
+    font-size:16px;
+  }
+
+  .item{
+    font-size:15px;
+  }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="deck">
+
+
+<!-- ========================================================= -->
+<!-- 00. ТИТУЛ -->
+<!-- ========================================================= -->
+
+<section class="slide active hero">
+
+  <div class="kicker">
+    ДУП.05 • 09.02.11
+  </div>
+
+  <h1>
+    Разработка<br>
+    <span class="red">
+      стратегии интернет-маркетинга
+    </span>
+  </h1>
+
+  <p class="lead">
+    От анализа рынка и аудитории — к целям,
+    позиционированию, каналам продвижения,
+    KPI, бюджету и плану действий.
+  </p>
+
+  <div class="meta">
+
+    <span class="pill">
+      2 пары • 180 минут
+    </span>
+
+    <span class="pill">
+      1 пара — теория
+    </span>
+
+    <span class="pill">
+      2 пара — практика
+    </span>
+
+  </div>
+
+  <div class="mark"></div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 01. ЦЕЛЬ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    01 • Цель занятия
+  </div>
+
+  <h2>
+    Что мы должны получить?
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <span class="num">01</span>
+      <strong>Понимание</strong>
+      <p>
+        Разобраться, что такое digital-стратегия
+        и зачем она нужна бизнесу.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="num">02</span>
+      <strong>Анализ</strong>
+      <p>
+        Научиться анализировать рынок,
+        аудиторию и конкурентов.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="num">03</span>
+      <strong>Позиционирование</strong>
+      <p>
+        Научиться формулировать ценность
+        и УТП цифрового продукта.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="num">04</span>
+      <strong>Каналы</strong>
+      <p>
+        Понимать, где и каким способом
+        продвигать продукт.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="num">05</span>
+      <strong>KPI</strong>
+      <p>
+        Определять показатели,
+        по которым оценивается результат.
+      </p>
+    </div>
+
+    <div class="card">
+      <span class="num">06</span>
+      <strong>Практика</strong>
+      <p>
+        Собрать собственную
+        мини digital-стратегию.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Главный результат:
+    <span class="red">
+      студент умеет объяснить, как продвигать цифровой продукт.
+    </span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 02. ЧТО ТАКОЕ DIGITAL-СТРАТЕГИЯ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    02 • Digital-стратегия
+  </div>
+
+  <h2>
+    Что такое digital-стратегия?
+  </h2>
+
+  <p>
+    <b>Digital-стратегия</b> —
+    это система решений о том, как цифровой продукт
+    будет находить пользователей, взаимодействовать
+    с ними и достигать бизнес-целей.
+  </p>
+
+  <div class="flow">
+
+    <span>Цель</span>
+    <b class="arrow">→</b>
+
+    <span>Аудитория</span>
+    <b class="arrow">→</b>
+
+    <span>Ценность</span>
+    <b class="arrow">→</b>
+
+    <span>Каналы</span>
+    <b class="arrow">→</b>
+
+    <span>Действие</span>
+    <b class="arrow">→</b>
+
+    <span>KPI</span>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Стратегия отвечает «куда?»</strong>
+      <p>
+        Какого результата компания хочет достичь
+        и какое направление выбрать.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Тактика отвечает «как?»</strong>
+      <p>
+        Какие конкретные инструменты,
+        кампании и активности использовать.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Стратегия — это не список рекламных каналов.
+    Это <span class="red">логика принятия решений.</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 03. ЦЕЛИ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    03 • Цели
+  </div>
+
+  <h2>
+    С чего начинается стратегия?
+  </h2>
+
+  <p>
+    До выбора рекламы необходимо определить,
+    <b>какого результата должен достичь бизнес.</b>
+  </p>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>Продажи</strong>
+      <p>
+        Увеличить количество заказов
+        или объём продаж.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Лиды</strong>
+      <p>
+        Получить заявки потенциальных клиентов.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Регистрации</strong>
+      <p>
+        Привлечь новых пользователей сервиса.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Узнаваемость</strong>
+      <p>
+        Сделать продукт более известным
+        среди целевой аудитории.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Удержание</strong>
+      <p>
+        Вернуть существующих пользователей
+        и увеличить повторные действия.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Лояльность</strong>
+      <p>
+        Сформировать доверие и долгосрочные отношения.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 04. САЙТ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    04 • Сайт
+  </div>
+
+  <h2>
+    Сайт как инструмент бизнеса
+  </h2>
+
+  <div class="two">
+
+    <div>
+
+      <div class="card">
+        <strong>Сайт — не просто «страница в Интернете»</strong>
+
+        <p>
+          Это цифровая точка контакта,
+          где пользователь получает информацию
+          и совершает целевое действие.
+        </p>
+      </div>
+
+      <div class="checklist">
+
+        <div class="item">
+          <b>01</b>
+          <span>Представляет продукт.</span>
+        </div>
+
+        <div class="item">
+          <b>02</b>
+          <span>Объясняет ценность.</span>
+        </div>
+
+        <div class="item">
+          <b>03</b>
+          <span>Формирует доверие.</span>
+        </div>
+
+        <div class="item">
+          <b>04</b>
+          <span>Приводит к целевому действию.</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="callout">
+
+      <h3>
+        Главный вопрос
+      </h3>
+
+      <p>
+        Что должен сделать пользователь
+        после посещения сайта?
+      </p>
+
+      <br>
+
+      <p>
+        Купить → зарегистрироваться →
+        оставить заявку → скачать →
+        связаться.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 05. ВИДЫ САЙТОВ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    05 • Типы сайтов
+  </div>
+
+  <h2>
+    Виды сайтов
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>Landing Page</strong>
+      <p>
+        Одностраничный сайт для конкретного
+        предложения или кампании.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Корпоративный сайт</strong>
+      <p>
+        Информация о компании,
+        продуктах, услугах и контактах.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Интернет-магазин</strong>
+      <p>
+        Каталог товаров,
+        корзина и оформление заказа.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Портал</strong>
+      <p>
+        Большой объём информации
+        и множество разделов.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Сервис</strong>
+      <p>
+        Пользователь не только читает,
+        но и выполняет действия внутри системы.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Блог / медиа</strong>
+      <p>
+        Основная ценность —
+        регулярный информационный контент.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Тип сайта выбирают исходя из
+    <span class="red">задачи бизнеса и сценария пользователя.</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 06. B2B B2C SAAS -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    06 • Бизнес-модели
+  </div>
+
+  <h2>
+    B2B, B2C и SaaS
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+
+      <span class="num">B2C</span>
+
+      <strong>
+        Business → Consumer
+      </strong>
+
+      <p>
+        Компания продаёт продукт
+        конечному пользователю.
+      </p>
+
+      <p>
+        Пример:
+        интернет-магазин или приложение.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">B2B</span>
+
+      <strong>
+        Business → Business
+      </strong>
+
+      <p>
+        Компания продаёт продукт
+        другой компании.
+      </p>
+
+      <p>
+        Решение часто принимает
+        несколько участников.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">SaaS</span>
+
+      <strong>
+        Software as a Service
+      </strong>
+
+      <p>
+        Программный сервис,
+        которым пользуются через Интернет.
+      </p>
+
+      <p>
+        Часто используется
+        подписочная модель.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Тип бизнеса влияет на
+    <span class="red">аудиторию, цикл сделки, каналы и KPI.</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 07. ПРОДУКТОВЫЙ ДИЗАЙН -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    07 • Product Design
+  </div>
+
+  <h2>
+    Продуктовый и сервисный дизайн
+  </h2>
+
+  <p>
+    Продвижение невозможно отделить от самого продукта.
+    Если продукт неудобен или не решает проблему,
+    реклама не исправит ситуацию надолго.
+  </p>
+
+  <div class="flow">
+
+    <span>Проблема</span>
+    <b class="arrow">→</b>
+
+    <span>Потребность</span>
+    <b class="arrow">→</b>
+
+    <span>Решение</span>
+    <b class="arrow">→</b>
+
+    <span>Опыт</span>
+    <b class="arrow">→</b>
+
+    <span>Результат</span>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Product Design</strong>
+      <p>
+        Проектирование продукта с учётом
+        потребностей пользователей и бизнес-задач.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Service Design</strong>
+      <p>
+        Проектирование всего взаимодействия
+        пользователя с сервисом.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 08. UI UX -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    08 • UI / UX
+  </div>
+
+  <h2>
+    Основы UI/UX
+  </h2>
+
+  <div class="two">
+
+    <div class="card">
+
+      <span class="badge">
+        UX
+      </span>
+
+      <h3 style="margin-top:15px">
+        User Experience
+      </h3>
+
+      <p>
+        Насколько удобно пользователю
+        решать свою задачу.
+      </p>
+
+      <div class="checklist">
+
+        <div class="item">
+          <b>✓</b>
+          <span>Понятная структура</span>
+        </div>
+
+        <div class="item">
+          <b>✓</b>
+          <span>Простой сценарий</span>
+        </div>
+
+        <div class="item">
+          <b>✓</b>
+          <span>Минимум лишних действий</span>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="card">
+
+      <span class="badge">
+        UI
+      </span>
+
+      <h3 style="margin-top:15px">
+        User Interface
+      </h3>
+
+      <p>
+        Визуальная часть интерфейса:
+        цвета, кнопки, шрифты и элементы.
+      </p>
+
+      <div class="checklist">
+
+        <div class="item">
+          <b>✓</b>
+          <span>Визуальная иерархия</span>
+        </div>
+
+        <div class="item">
+          <b>✓</b>
+          <span>Читаемость</span>
+        </div>
+
+        <div class="item">
+          <b>✓</b>
+          <span>Единый стиль</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 09. АНАЛИЗ РЫНКА -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    09 • Анализ
+  </div>
+
+  <h2>
+    Анализ онлайн-рынка
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>Спрос</strong>
+      <p>
+        Насколько пользователи заинтересованы
+        в решении проблемы?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Конкуренция</strong>
+      <p>
+        Сколько существует альтернатив
+        и насколько они сильны?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Тренды</strong>
+      <p>
+        Какие изменения происходят
+        в поведении пользователей?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Сезонность</strong>
+      <p>
+        Меняется ли спрос
+        в разные периоды?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Цены</strong>
+      <p>
+        Какой диапазон цен
+        существует на рынке?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Барьеры</strong>
+      <p>
+        Что мешает пользователю
+        выбрать продукт?
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 10. СПРОС -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    10 • Спрос
+  </div>
+
+  <h2>
+    Как анализировать спрос?
+  </h2>
+
+  <p>
+    Спрос показывает,
+    <b>есть ли у аудитории реальная потребность</b>
+    в решении.
+  </p>
+
+  <div class="flow">
+
+    <span>Запросы</span>
+    <b class="arrow">→</b>
+
+    <span>Интерес</span>
+    <b class="arrow">→</b>
+
+    <span>Сравнение</span>
+    <b class="arrow">→</b>
+
+    <span>Действие</span>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Поисковые запросы</strong>
+      <p>
+        Что люди ищут и какими словами
+        описывают свою проблему.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Отзывы</strong>
+      <p>
+        Какие проблемы пользователи
+        регулярно описывают.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Форумы и сообщества</strong>
+      <p>
+        Какие вопросы и темы
+        обсуждает аудитория.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Конкуренты</strong>
+      <p>
+        Какие продукты уже покупают
+        и какие решения выбирают.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 11. КОНКУРЕНТЫ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    11 • Конкуренты
+  </div>
+
+  <h2>
+    Анализ конкурентов
+  </h2>
+
+  <table>
+
+    <tr>
+      <th>Параметр</th>
+      <th>Что изучаем?</th>
+    </tr>
+
+    <tr>
+      <td>Продукт</td>
+      <td>
+        Функции, ассортимент,
+        преимущества.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Цена</td>
+      <td>
+        Стоимость и тарифы.
+      </td>
+    </tr>
+
+    <tr>
+      <td>Аудитория</td>
+      <td>
+        Для кого работает конкурент?
+      </td>
+    </tr>
+
+    <tr>
+      <td>Позиционирование</td>
+      <td>
+        Как объясняется ценность?
+      </td>
+    </tr>
+
+    <tr>
+      <td>Каналы</td>
+      <td>
+        Где конкурент взаимодействует
+        с пользователями?
+      </td>
+    </tr>
+
+  </table>
+
+  <div class="bigquote">
+    Цель анализа — не копировать конкурентов,
+    а найти <span class="red">свободную возможность.</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 12. САЙТЫ КОНКУРЕНТОВ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    12 • Сайты
+  </div>
+
+  <h2>
+    Как анализировать сайт конкурента?
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>Первый экран</strong>
+      <p>
+        Понятно ли сразу,
+        что предлагает компания?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Навигация</strong>
+      <p>
+        Можно ли быстро найти
+        нужную информацию?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Контент</strong>
+      <p>
+        Есть ли аргументы,
+        доказательства и ответы?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>CTA</strong>
+      <p>
+        Понятно ли,
+        что делать дальше?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Мобильная версия</strong>
+      <p>
+        Удобно ли пользоваться
+        сайтом со смартфона?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Доверие</strong>
+      <p>
+        Отзывы, кейсы,
+        гарантии, контакты.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 13. ПОЗИЦИОНИРОВАНИЕ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    13 • Позиционирование
+  </div>
+
+  <h2>
+    Как продукт должен восприниматься?
+  </h2>
+
+  <p>
+    <b>Позиционирование</b> — это место,
+    которое продукт занимает в сознании
+    выбранной аудитории относительно альтернатив.
+  </p>
+
+  <div class="card">
+
+    <span class="badge">
+      Формула
+    </span>
+
+    <h3 style="font-size:30px;margin-top:16px">
+
+      Для
+      <span class="red">[аудитории]</span>
+
+      продукт
+      <span class="red">[название]</span>
+
+      — это
+      <span class="red">[категория]</span>,
+
+      который помогает
+      <span class="red">[результат]</span>
+
+      благодаря
+      <span class="red">[отличие]</span>.
+
+    </h3>
+
+  </div>
+
+  <div class="bigquote">
+    Позиционирование отвечает:
+    <span class="red">«Почему именно мы?»</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 14. УТП -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    14 • УТП
+  </div>
+
+  <h2>
+    Уникальное торговое предложение
+  </h2>
+
+  <p>
+    <b>УТП</b> — краткое предложение,
+    которое показывает конкретную выгоду
+    и отличие продукта.
+  </p>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Понятность</strong>
+      <p>
+        Пользователь должен сразу понять,
+        что ему предлагают.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Польза</strong>
+      <p>
+        УТП должно отвечать
+        на реальную потребность.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Отличие</strong>
+      <p>
+        Нужно показать,
+        чем продукт отличается.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Доказуемость</strong>
+      <p>
+        Обещание должно соответствовать
+        реальным характеристикам продукта.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 15. KPI SMART БЮДЖЕТ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    15 • KPI и планирование
+  </div>
+
+  <h2>
+    KPI, SMART и бюджет
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+
+      <span class="num">
+        KPI
+      </span>
+
+      <strong>
+        Показатели
+      </strong>
+
+      <p>
+        CTR, конверсия,
+        количество лидов,
+        CPA, CPL, продажи.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">
+        SMART
+      </span>
+
+      <strong>
+        Хорошая цель
+      </strong>
+
+      <p>
+        Конкретная, измеримая,
+        достижимая, значимая
+        и ограниченная сроком.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">
+        БЮДЖЕТ
+      </span>
+
+      <strong>
+        Ресурсы
+      </strong>
+
+      <p>
+        Сколько готовы потратить
+        и на какие активности.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Цель → KPI → бюджет → канал → действие → результат.
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 16. МЕДИАПЛАН -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    16 • Медиаплан
+  </div>
+
+  <h2>
+    Медиаплан, бриф и ТЗ
+  </h2>
+
+  <div class="grid">
+
+    <div class="card">
+
+      <strong>
+        Медиаплан
+      </strong>
+
+      <p>
+        Таблица рекламных активностей:
+        канал, период, бюджет,
+        формат и KPI.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <strong>
+        Бриф
+      </strong>
+
+      <p>
+        Документ с исходной информацией:
+        задача, аудитория, продукт,
+        ограничения и цели.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <strong>
+        Техническое задание
+      </strong>
+
+      <p>
+        Конкретное описание того,
+        что нужно создать или выполнить.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <strong>
+        Планирование
+      </strong>
+
+      <p>
+        Определяем сроки,
+        ресурсы, ответственных
+        и ожидаемый результат.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Стратегия превращается в работу,
+    когда появляются <span class="red">конкретные задачи и сроки.</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 17. ИТОГ ПАРЫ 1 -->
+<!-- ========================================================= -->
+
+<section class="slide section">
+
+  <div class="section-number">
+    01
+  </div>
+
+  <div class="kicker">
+    Итог первой пары
+  </div>
+
+  <h2>
+    Теория завершена
+  </h2>
+
+  <p class="lead">
+    Теперь мы умеем разобрать продукт,
+    определить аудиторию, изучить рынок,
+    сформулировать позиционирование,
+    выбрать каналы и определить KPI.
+  </p>
+
+  <div class="bigquote">
+    Следующий шаг —
+    <span class="red">
+      применить всё это на практике.
+    </span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 18. ДЗ ПОСЛЕ ПЕРВОЙ ПАРЫ -->
+<!-- ========================================================= -->
+
+<section class="slide dz">
+
+  <div class="kicker">
+    18 • Домашнее задание №1
+  </div>
+
+  <h2>
+    Подготовка продукта к стратегии
+  </h2>
+
+  <p>
+    Выберите любой цифровой продукт:
+    приложение, сайт, онлайн-сервис,
+    игру, интернет-магазин
+    или образовательную платформу.
+  </p>
+
+  <div class="checklist">
+
+    <div class="item">
+      <b>01</b>
+      <span>
+        <b>Продукт</b> — что это и какую проблему решает?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>02</b>
+      <span>
+        <b>Целевая аудитория</b> — кто потенциальный пользователь?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>03</b>
+      <span>
+        <b>3 конкурента</b> — какие продукты предлагают альтернативу?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>04</b>
+      <span>
+        <b>Позиционирование</b> — почему пользователь должен выбрать продукт?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>05</b>
+      <span>
+        <b>Предварительное УТП</b> — одно короткое предложение.
+      </span>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:18px">
+
+    <strong>
+      Формат
+    </strong>
+
+    <p>
+      1–2 страницы или 4–5 слайдов.
+      Материал используется на практической паре.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- ПАРА 2 -->
+<!-- ========================================================= -->
+
+<section class="slide section">
+
+  <div class="section-number">
+    02
+  </div>
+
+  <div class="kicker">
+    Пара 2 • Практика
+  </div>
+
+  <h2>
+    Разрабатываем
+    <span class="red">
+      digital-стратегию
+    </span>
+  </h2>
+
+  <p class="lead">
+    Работаем командами и превращаем идею
+    цифрового продукта в конкретный план продвижения.
+  </p>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 19. ЗАДАЧА -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    19 • Практика
+  </div>
+
+  <h2>
+    Постановка практической задачи
+  </h2>
+
+  <div class="card">
+
+    <span class="badge">
+      Работа в парах / мини-группах
+    </span>
+
+    <h3 style="font-size:30px;margin-top:15px">
+      Разработать мини digital-стратегию
+      для выбранного продукта.
+    </h3>
+
+    <p>
+      Ваша задача — пройти путь
+      от бизнес-цели до каналов продвижения,
+      KPI и бюджета.
+    </p>
+
+  </div>
+
+  <div class="flow">
+
+    <span>Продукт</span>
+    <b class="arrow">→</b>
+
+    <span>Цель</span>
+    <b class="arrow">→</b>
+
+    <span>Анализ</span>
+    <b class="arrow">→</b>
+
+    <span>ЦА</span>
+    <b class="arrow">→</b>
+
+    <span>Каналы</span>
+    <b class="arrow">→</b>
+
+    <span>KPI</span>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 20. ВЫБОР ПРОДУКТА -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    20 • Практика
+  </div>
+
+  <h2>
+    Шаг 1. Выбираем продукт
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>📱 Приложение</strong>
+      <p>
+        Например, приложение
+        для учёбы.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>🌐 Сайт</strong>
+      <p>
+        Например, сервис
+        для поиска курсов.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>🛒 Интернет-магазин</strong>
+      <p>
+        Продажа товаров
+        через Интернет.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>🎮 Игра</strong>
+      <p>
+        Мобильная или
+        компьютерная игра.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>☁️ SaaS</strong>
+      <p>
+        Онлайн-сервис
+        по подписке.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>🎓 EdTech</strong>
+      <p>
+        Образовательная
+        цифровая платформа.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Выбирайте продукт,
+    <span class="red">
+      который легко объяснить за 30 секунд.
+    </span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 21. БИЗНЕС-ЦЕЛЬ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    21 • Практика
+  </div>
+
+  <h2>
+    Шаг 2. Определяем бизнес-цель
+  </h2>
+
+  <p>
+    Запишите одну основную цель,
+    которую должен решить маркетинг.
+  </p>
+
+  <div class="card">
+
+    <span class="badge">
+      Шаблон
+    </span>
+
+    <h3 style="font-size:28px;margin-top:15px">
+
+      «Увеличить / получить / привлечь
+      <span class="red">________</span>
+      за
+      <span class="red">________</span>
+      благодаря
+      <span class="red">________</span>».
+
+    </h3>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Плохо</strong>
+      <p>
+        «Продвинуть приложение».
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Лучше</strong>
+      <p>
+        «Получить 500 регистраций
+        за первый месяц продвижения».
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 22. АНАЛИЗ РЫНКА -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    22 • Практика
+  </div>
+
+  <h2>
+    Шаг 3. Анализируем рынок
+  </h2>
+
+  <div class="checklist">
+
+    <div class="item">
+      <b>01</b>
+      <span>
+        Найдите 2–3 основных направления,
+        где работает продукт.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>02</b>
+      <span>
+        Определите основные потребности пользователей.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>03</b>
+      <span>
+        Опишите основные тренды рынка.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>04</b>
+      <span>
+        Определите основные сложности
+        и барьеры для продукта.
+      </span>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Вопрос:
+    <span class="red">
+      «Что происходит на рынке прямо сейчас?»
+    </span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 23. ПОИСК КОНКУРЕНТОВ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    23 • Практика
+  </div>
+
+  <h2>
+    Шаг 4. Ищем конкурентов
+  </h2>
+
+  <div class="flow">
+
+    <span>Прямые</span>
+    <b class="arrow">+</b>
+
+    <span>Косвенные</span>
+    <b class="arrow">+</b>
+
+    <span>Альтернативы</span>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Прямой конкурент</strong>
+      <p>
+        Предлагает похожий продукт
+        той же аудитории.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Косвенный конкурент</strong>
+      <p>
+        Решает похожую проблему
+        другим способом.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Альтернатива</strong>
+      <p>
+        Пользователь может решить
+        проблему самостоятельно.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Задание</strong>
+      <p>
+        Найдите минимум
+        3 конкурента.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 24. СРАВНЕНИЕ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    24 • Практика
+  </div>
+
+  <h2>
+    Шаг 5. Сравниваем конкурентов
+  </h2>
+
+  <table>
+
+    <tr>
+      <th>Критерий</th>
+      <th>Мы</th>
+      <th>Конкурент 1</th>
+      <th>Конкурент 2</th>
+    </tr>
+
+    <tr>
+      <td>Продукт</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>Цена</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>ЦА</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>УТП</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>Каналы</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+    <tr>
+      <td>Сильная сторона</td>
+      <td>—</td>
+      <td>—</td>
+      <td>—</td>
+    </tr>
+
+  </table>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 25. САЙТЫ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    25 • Практика
+  </div>
+
+  <h2>
+    Шаг 6. Анализируем сайты конкурентов
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>1. Первый экран</strong>
+      <p>
+        Что мы понимаем
+        за первые 5 секунд?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>2. Навигация</strong>
+      <p>
+        Насколько легко
+        найти нужный раздел?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>3. Контент</strong>
+      <p>
+        Какие аргументы
+        использует конкурент?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>4. CTA</strong>
+      <p>
+        Какое действие
+        предлагает сайт?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>5. Доверие</strong>
+      <p>
+        Отзывы, кейсы,
+        гарантии, цифры.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>6. UX</strong>
+      <p>
+        Удобно ли пользователю
+        двигаться по сайту?
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 26. ЦЕЛЕВОЙ СЕГМЕНТ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    26 • Практика
+  </div>
+
+  <h2>
+    Шаг 7. Определяем целевой сегмент
+  </h2>
+
+  <div class="flow">
+
+    <span>Все пользователи</span>
+    <b class="arrow">→</b>
+
+    <span>Сегменты</span>
+    <b class="arrow">→</b>
+
+    <span>Приоритетный сегмент</span>
+
+  </div>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>Кто?</strong>
+      <p>
+        Кто является пользователем?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Проблема</strong>
+      <p>
+        Какую проблему нужно решить?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Мотивация</strong>
+      <p>
+        Почему пользователь ищет решение?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Каналы</strong>
+      <p>
+        Где пользователь
+        получает информацию?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Барьеры</strong>
+      <p>
+        Что может остановить
+        от покупки?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Результат</strong>
+      <p>
+        Что пользователь
+        считает успехом?
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 27. ПОЗИЦИОНИРОВАНИЕ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    27 • Практика
+  </div>
+
+  <h2>
+    Шаг 8. Формулируем позиционирование
+  </h2>
+
+  <div class="card">
+
+    <span class="badge">
+      Заполните
+    </span>
+
+    <h3 style="font-size:29px;margin-top:15px">
+
+      Для
+      <span class="red">________</span>
+
+      наш продукт —
+      это
+      <span class="red">________</span>,
+
+      который помогает
+      <span class="red">________</span>
+
+      благодаря
+      <span class="red">________</span>.
+
+    </h3>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Аудитория</strong>
+      <p>
+        Кому предназначен продукт?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Категория</strong>
+      <p>
+        Что это за продукт?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Результат</strong>
+      <p>
+        Что получает пользователь?
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Отличие</strong>
+      <p>
+        Почему стоит выбрать именно его?
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 28. УТП -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    28 • Практика
+  </div>
+
+  <h2>
+    Шаг 9. Разрабатываем УТП
+  </h2>
+
+  <div class="checklist">
+
+    <div class="item">
+      <b>01</b>
+      <span>
+        Какая главная выгода продукта?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>02</b>
+      <span>
+        Что отличает продукт от конкурентов?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>03</b>
+      <span>
+        Почему это важно именно нашей ЦА?
+      </span>
+    </div>
+
+    <div class="item">
+      <b>04</b>
+      <span>
+        Можно ли доказать это преимущество?
+      </span>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:20px">
+
+    <span class="badge">
+      Итог
+    </span>
+
+    <h3 style="font-size:28px;margin-top:15px">
+      «Наш продукт помогает
+      <span class="red">[ЦА]</span>
+      получить
+      <span class="red">[выгоду]</span>
+      благодаря
+      <span class="red">[отличию]</span>».
+    </h3>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 29. КАНАЛЫ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    29 • Практика
+  </div>
+
+  <h2>
+    Шаг 10. Выбираем каналы продвижения
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>SEO</strong>
+      <p>
+        Если аудитория активно ищет
+        решение в поиске.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>SMM</strong>
+      <p>
+        Если важны контент,
+        общение и сообщество.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>PPC</strong>
+      <p>
+        Если нужно быстро
+        протестировать спрос.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Контент</strong>
+      <p>
+        Если продукт требует
+        объяснения и доверия.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Email</strong>
+      <p>
+        Для возврата
+        и удержания пользователей.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Партнёрства</strong>
+      <p>
+        Для выхода
+        на аудиторию других площадок.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Выберите
+    <span class="red">3–4 канала</span>
+    и обязательно объясните свой выбор.
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 30. SMART -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    30 • Практика
+  </div>
+
+  <h2>
+    Шаг 11. Ставим SMART-цели
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>S</strong>
+      <p>
+        Specific —
+        конкретная.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>M</strong>
+      <p>
+        Measurable —
+        измеримая.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>A</strong>
+      <p>
+        Achievable —
+        достижимая.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>R</strong>
+      <p>
+        Relevant —
+        значимая.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>T</strong>
+      <p>
+        Time-bound —
+        ограниченная сроком.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>ПРИМЕР</strong>
+      <p>
+        Получить 500 регистраций
+        за первый месяц.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 31. KPI -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    31 • Практика
+  </div>
+
+  <h2>
+    Шаг 12. Определяем KPI
+  </h2>
+
+  <table>
+
+    <tr>
+      <th>Цель</th>
+      <th>Возможный KPI</th>
+    </tr>
+
+    <tr>
+      <td>Охват</td>
+      <td>Показы / охват</td>
+    </tr>
+
+    <tr>
+      <td>Трафик</td>
+      <td>Посещения / клики</td>
+    </tr>
+
+    <tr>
+      <td>Интерес</td>
+      <td>CTR / вовлечённость</td>
+    </tr>
+
+    <tr>
+      <td>Лиды</td>
+      <td>Количество заявок / CPL</td>
+    </tr>
+
+    <tr>
+      <td>Продажи</td>
+      <td>Заказы / выручка / CPA</td>
+    </tr>
+
+    <tr>
+      <td>Удержание</td>
+      <td>Повторные действия / retention</td>
+    </tr>
+
+  </table>
+
+  <div class="bigquote">
+    Для каждого канала ответьте:
+    <span class="red">
+      «Как поймём, что он работает?»
+    </span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 32. МЕДИАПЛАН -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    32 • Практика
+  </div>
+
+  <h2>
+    Шаг 13. Черновой медиаплан
+  </h2>
+
+  <table>
+
+    <tr>
+      <th>Канал</th>
+      <th>Активность</th>
+      <th>Период</th>
+      <th>Бюджет</th>
+      <th>KPI</th>
+    </tr>
+
+    <tr>
+      <td>SEO</td>
+      <td>Статьи</td>
+      <td>Месяц</td>
+      <td>—</td>
+      <td>Трафик</td>
+    </tr>
+
+    <tr>
+      <td>SMM</td>
+      <td>Посты / видео</td>
+      <td>Неделя</td>
+      <td>—</td>
+      <td>Охват</td>
+    </tr>
+
+    <tr>
+      <td>PPC</td>
+      <td>Реклама</td>
+      <td>Неделя</td>
+      <td>—</td>
+      <td>CTR / CPA</td>
+    </tr>
+
+    <tr>
+      <td>Email</td>
+      <td>Рассылка</td>
+      <td>Месяц</td>
+      <td>—</td>
+      <td>CR</td>
+    </tr>
+
+  </table>
+
+  <p>
+    Для учебного задания достаточно
+    приблизительного бюджета и логичного
+    объяснения распределения средств.
+  </p>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 33. БЮДЖЕТ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    33 • Практика
+  </div>
+
+  <h2>
+    Шаг 14. Распределяем бюджет
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+
+      <span class="num">
+        40%
+      </span>
+
+      <strong>
+        Основной канал
+      </strong>
+
+      <p>
+        Канал с наиболее высоким
+        ожидаемым эффектом.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">
+        30%
+      </span>
+
+      <strong>
+        Второй канал
+      </strong>
+
+      <p>
+        Дополнительный источник
+        привлечения аудитории.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">
+        20%
+      </span>
+
+      <strong>
+        Тестирование
+      </strong>
+
+      <p>
+        Проверка новых
+        гипотез.
+      </p>
+
+    </div>
+
+    <div class="card">
+
+      <span class="num">
+        10%
+      </span>
+
+      <strong>
+        Резерв
+      </strong>
+
+      <p>
+        Корректировка бюджета
+        по результатам.
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+    Это только
+    <span class="red">
+      учебный пример распределения.
+    </span>
+    В реальном проекте бюджет зависит от данных.
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 34. СБОРКА СТРАТЕГИИ -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    34 • Практика
+  </div>
+
+  <h2>
+    Шаг 15. Собираем стратегию
+  </h2>
+
+  <div class="flow">
+
+    <span>Продукт</span>
+    <b class="arrow">→</b>
+
+    <span>Цель</span>
+    <b class="arrow">→</b>
+
+    <span>Рынок</span>
+    <b class="arrow">→</b>
+
+    <span>Конкуренты</span>
+    <b class="arrow">→</b>
+
+    <span>ЦА</span>
+    <b class="arrow">→</b>
+
+    <span>УТП</span>
+    <b class="arrow">→</b>
+
+    <span>Каналы</span>
+    <b class="arrow">→</b>
+
+    <span>KPI</span>
+    <b class="arrow">→</b>
+
+    <span>Бюджет</span>
+
+  </div>
+
+  <div class="grid">
+
+    <div class="card">
+      <strong>Что у нас есть?</strong>
+
+      <p>
+        Цель, анализ, сегмент,
+        позиционирование, УТП,
+        каналы и показатели.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>Что осталось?</strong>
+
+      <p>
+        Оформить решения
+        в единый понятный документ.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 35. ЗАЩИТА -->
+<!-- ========================================================= -->
+
+<section class="slide">
+
+  <div class="kicker">
+    35 • Защита
+  </div>
+
+  <h2>
+    Представляем мини-стратегию
+  </h2>
+
+  <div class="grid3">
+
+    <div class="card">
+      <strong>01</strong>
+      <p>
+        Продукт и проблема.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>02</strong>
+      <p>
+        Целевая аудитория.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>03</strong>
+      <p>
+        Конкуренты.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>04</strong>
+      <p>
+        Позиционирование и УТП.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>05</strong>
+      <p>
+        Каналы продвижения.
+      </p>
+    </div>
+
+    <div class="card">
+      <strong>06</strong>
+      <p>
+        SMART-цель и KPI.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="bigquote">
+
+    На выступление —
+    <span class="red">
+      3 минуты
+    </span>
+    на команду.
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 36. ИТОГ -->
+<!-- ========================================================= -->
+
+<section class="slide section">
+
+  <div class="section-number">
+    ✓
+  </div>
+
+  <div class="kicker">
+    Итог практики
+  </div>
+
+  <h2>
+    Мини digital-стратегия готова
+  </h2>
+
+  <p class="lead">
+    Теперь у вас есть не просто идея продвижения,
+    а связанная система:
+    цель → аудитория → ценность → каналы → KPI → бюджет.
+  </p>
+
+  <div class="bigquote">
+    Хорошая стратегия —
+    это <span class="red">логичный ответ на вопрос «что, для кого, зачем и как?»</span>
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- 37. ДЗ ПОСЛЕ ВТОРОЙ ПАРЫ -->
+<!-- ========================================================= -->
+
+<section class="slide dz">
+
+  <div class="kicker">
+    37 • Домашнее задание №2
+  </div>
+
+  <h2>
+    Доработать digital-стратегию
+  </h2>
+
+  <p>
+    Используйте результат практической работы
+    и оформите полноценную мини-стратегию.
+  </p>
+
+  <div class="checklist">
+
+    <div class="item">
+      <b>01</b>
+      <span>
+        <b>Продукт</b> — описание и проблема пользователя.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>02</b>
+      <span>
+        <b>Цель</b> — одна SMART-цель.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>03</b>
+      <span>
+        <b>Анализ</b> — рынок и минимум 3 конкурента.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>04</b>
+      <span>
+        <b>ЦА</b> — минимум 2 сегмента и выбор приоритетного.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>05</b>
+      <span>
+        <b>Позиционирование + УТП</b>.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>06</b>
+      <span>
+        <b>Каналы</b> — минимум 4 канала с обоснованием.
+      </span>
+    </div>
+
+    <div class="item">
+      <b>07</b>
+      <span>
+        <b>KPI + медиаплан + бюджет</b>.
+      </span>
+    </div>
+
+  </div>
+
+  <div class="card" style="margin-top:18px">
+
+    <strong>
+      Формат
+    </strong>
+
+    <p>
+      5–8 слайдов или 2–3 страницы.
+      Можно использовать таблицы и схемы.
+    </p>
+
+  </div>
+
+</section>
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer>
+
+  <span id="counter">
+    01 / 38
+  </span>
+
+  <span>
+    ДУП.05 • ИНТЕРНЕТ-МАРКЕТИНГ • DIGITAL-СТРАТЕГИЯ
+  </span>
+
+  <div class="bar">
+    <i id="progress"></i>
+  </div>
+
+</footer>
+
+</div>
+
+
+<!-- ========================================================= -->
+<!-- НАВИГАЦИЯ -->
+<!-- ========================================================= -->
+
+<div class="controls">
+
+  <button
+    id="prev"
+    aria-label="Предыдущий">
+    ←
+  </button>
+
+  <button
+    id="next"
+    aria-label="Следующий">
+    →
+  </button>
+
+</div>
+
+
+<script>
+
+const slides = [
+  ...document.querySelectorAll('.slide')
+];
+
+let i = 0;
+
+
+/* Показать слайд */
+
+function show(n){
+
+  i = (n + slides.length) % slides.length;
+
+  slides.forEach(
+    (slide,index) => {
+
+      slide.classList.toggle(
+        'active',
+        index === i
+      );
+
+    }
+  );
+
+
+  /* Номер */
+
+  document
+    .getElementById('counter')
+    .textContent =
+      String(i + 1).padStart(2,'0')
+      + ' / '
+      + slides.length;
+
+
+  /* Прогресс */
+
+  document
+    .getElementById('progress')
+    .style.width =
+      ((i + 1) / slides.length * 100)
+      + '%';
+
+}
+
+
+/* Кнопки */
+
+document
+  .getElementById('next')
+  .onclick =
+    () => show(i + 1);
+
+document
+  .getElementById('prev')
+  .onclick =
+    () => show(i - 1);
+
+
+/* Клавиатура */
+
+document.addEventListener(
+  'keydown',
+  e => {
+
+    if(
+      [
+        'ArrowRight',
+        ' ',
+        'PageDown'
+      ].includes(e.key)
+    ){
+
+      e.preventDefault();
+
+      show(i + 1);
+
+    }
+
+
+    if(
+      [
+        'ArrowLeft',
+        'PageUp'
+      ].includes(e.key)
+    ){
+
+      e.preventDefault();
+
+      show(i - 1);
+
+    }
+
+
+    if(e.key === 'Home'){
+
+      show(0);
+
+    }
+
+
+    if(e.key === 'End'){
+
+      show(slides.length - 1);
+
+    }
+
+  }
+);
+
+
+/* Свайп */
+
+let startX = null;
+
+document.addEventListener(
+  'touchstart',
+  e => {
+
+    startX =
+      e.changedTouches[0].clientX;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+document.addEventListener(
+  'touchend',
+  e => {
+
+    if(startX === null){
+      return;
+    }
+
+    const dx =
+      e.changedTouches[0].clientX
+      - startX;
+
+    if(Math.abs(dx) > 50){
+
+      show(
+        i + (
+          dx < 0
+          ? 1
+          : -1
+        )
+      );
+
+    }
+
+    startX = null;
+
+  },
+  {
+    passive:true
+  }
+);
+
+
+/* Запуск */
+
+show(0);
+
+</script>
+
+</body>
+</html>
