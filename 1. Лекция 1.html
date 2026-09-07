@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Введение в интернет-маркетинг — ДУП.05</title>
+<style>
+:root{
+  --red:#e3262e; --red2:#ff4b52; --dark:#17171a; --muted:#6d6d73;
+  --bg:#f7f7f5; --card:#fff; --line:#e9e9e7;
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;font-family:Inter,Segoe UI,Arial,sans-serif;background:#111;color:var(--dark);overflow:hidden}
+body{display:flex;align-items:center;justify-content:center}
+.deck{width:100vw;height:100vh;position:relative;background:var(--bg)}
+.slide{display:none;width:100%;height:100%;padding:6vh 7vw 7vh;position:relative;overflow:auto}
+.slide.active{display:flex;flex-direction:column}
+.slide:before{content:"";position:absolute;top:0;left:0;width:100%;height:7px;background:var(--red)}
+.kicker{font-size:13px;text-transform:uppercase;letter-spacing:.16em;font-weight:800;color:var(--red);margin-bottom:12px}
+h1{font-size:clamp(42px,5.5vw,86px);line-height:.98;margin:0 0 22px;letter-spacing:-.045em}
+h2{font-size:clamp(32px,4vw,58px);line-height:1.02;margin:0 0 26px;letter-spacing:-.035em}
+h3{font-size:20px;margin:0 0 9px}
+p{font-size:19px;line-height:1.5;color:#36363b;max-width:1050px}
+.lead{font-size:clamp(20px,2vw,30px);line-height:1.35;color:#4a4a50;max-width:980px}
+.red{color:var(--red)}
+.muted{color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 30px rgba(20,20,20,.045)}
+.card strong{display:block;font-size:18px;margin-bottom:7px}
+.card p{font-size:16px;margin:0}
+.num{font-size:12px;font-weight:900;color:var(--red);letter-spacing:.12em}
+.bigquote{border-left:6px solid var(--red);padding:8px 0 8px 24px;font-size:clamp(25px,3vw,43px);line-height:1.18;font-weight:800;max-width:1050px;margin-top:18px}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:25px}
+.flow span{background:#fff;border:1px solid var(--line);border-radius:999px;padding:13px 17px;font-weight:800}
+.arrow{color:var(--red);font-weight:900}
+.hero{justify-content:center!important;background:
+radial-gradient(circle at 85% 20%,rgba(227,38,46,.13),transparent 27%),
+linear-gradient(135deg,#fff 0%,#f7f7f5 62%,#fff 100%)}
+.hero .mark{position:absolute;right:7vw;bottom:7vh;width:230px;height:230px;border-radius:50%;background:var(--red);opacity:.96}
+.hero .mark:after{content:"DIGITAL";position:absolute;color:#fff;font-weight:900;font-size:28px;letter-spacing:.08em;transform:rotate(-45deg);left:42px;top:100px}
+.hero .meta{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}
+.pill{border:1px solid #ddd;border-radius:999px;padding:10px 14px;background:#fff;font-weight:700}
+.two{display:grid;grid-template-columns:1.1fr .9fr;gap:30px;align-items:start}
+.callout{background:var(--red);color:#fff;border-radius:28px;padding:28px}
+.callout h3,.callout p{color:#fff}
+.callout p{margin:0;font-size:17px}
+.checklist{display:grid;gap:12px;margin-top:8px}
+.item{display:flex;gap:13px;align-items:flex-start;background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;font-size:17px;line-height:1.4}
+.item b{color:var(--red)}
+footer{position:absolute;bottom:22px;left:7vw;right:7vw;display:flex;justify-content:space-between;align-items:center;color:#8a8a8e;font-size:12px;pointer-events:none}
+footer .bar{width:120px;height:4px;background:#ddd;border-radius:4px;overflow:hidden}
+footer .bar i{display:block;height:100%;background:var(--red);width:0}
+.controls{position:fixed;right:24px;bottom:20px;z-index:20;display:flex;gap:8px}
+button{border:1px solid #ddd;background:#fff;width:42px;height:42px;border-radius:50%;font-size:18px;cursor:pointer;box-shadow:0 5px 18px rgba(0,0,0,.08)}
+button:hover{border-color:var(--red);color:var(--red)}
+.badge{display:inline-block;background:#fff0f0;color:var(--red);border-radius:10px;padding:7px 10px;font-weight:800;font-size:13px}
+table{border-collapse:collapse;width:100%;background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--line);font-size:16px}
+td,th{padding:13px 15px;border-bottom:1px solid var(--line);text-align:left}
+th{background:#fff5f5;color:var(--red)}
+.small{font-size:14px!important}
+.dz{background:linear-gradient(135deg,#fff 0%,#fff1f1 100%);border:2px solid #ffd4d4}
+@media(max-width:800px){
+ .slide{padding:7vh 5vw 8vh}.grid,.grid3,.two{grid-template-columns:1fr}
+ .card{padding:16px}.hero .mark{width:140px;height:140px;right:5vw;bottom:8vh}
+ .hero .mark:after{font-size:17px;left:27px;top:60px}
+ p{font-size:16px}.item{font-size:15px}
+}
+</style>
+</head>
+<body>
+<div class="deck">
+
+<section class="slide active hero">
+  <div class="kicker">ДУП.05 • 09.02.11</div>
+  <h1>Введение в<br><span class="red">интернет-маркетинг</span></h1>
+  <p class="lead">Как цифровые продукты находят своих пользователей, привлекают внимание и превращают взаимодействие в измеримый результат.</p>
+  <div class="meta"><span class="pill">1 пара • 90 минут</span><span class="pill">Разработка и управление программным обеспечением</span></div>
+  <div class="mark"></div>
+</section>
+
+<section class="slide">
+  <div class="kicker">01 • Цель занятия</div><h2>Что сегодня изучаем?</h2>
+  <div class="grid3">
+    <div class="card"><span class="num">01</span><strong>Маркетинг</strong><p>Разберём, что такое маркетинг и почему он начинается с понимания потребностей пользователя.</p></div>
+    <div class="card"><span class="num">02</span><strong>Digital</strong><p>Поймём, чем цифровой маркетинг отличается от традиционного и какие технологии он использует.</p></div>
+    <div class="card"><span class="num">03</span><strong>Каналы</strong><p>Рассмотрим сайты, поиск, соцсети, email, рекламу, видео и мессенджеры.</p></div>
+    <div class="card"><span class="num">04</span><strong>Нестандартное продвижение</strong><p>Разберём вирусный и партизанский маркетинг.</p></div>
+    <div class="card"><span class="num">05</span><strong>Digital-команда</strong><p>Познакомимся с основными профессиями и зонами ответственности специалистов.</p></div>
+    <div class="card"><span class="num">06</span><strong>Практика</strong><p>Применим знания к условному цифровому продукту.</p></div>
+  </div>
+  <div class="bigquote">Главный вопрос: как сделать так, чтобы нужный продукт увидел нужный пользователь в нужное время?</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">02 • Основы</div><h2>Что такое маркетинг?</h2>
+  <p><b>Маркетинг</b> — деятельность по изучению потребностей людей, созданию ценности для них, продвижению продукта и анализу результатов.</p>
+  <div class="grid">
+    <div class="card"><strong>КТО?</strong><p>Кому нужен продукт? Кто является потенциальным пользователем?</p></div>
+    <div class="card"><strong>ЧТО?</strong><p>Какую проблему решает продукт и какую ценность он создаёт?</p></div>
+    <div class="card"><strong>ПОЧЕМУ?</strong><p>Почему пользователь должен выбрать именно этот продукт?</p></div>
+    <div class="card"><strong>ГДЕ И КАК?</strong><p>Где найти аудиторию и каким сообщением донести предложение?</p></div>
+  </div>
+  <div class="bigquote">Маркетинг ≠ реклама. Реклама — только один из инструментов маркетинга.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">03 • Система</div><h2>Из чего состоит маркетинг?</h2>
+  <div class="flow">
+    <span>Исследование</span><b class="arrow">→</b><span>Продукт</span><b class="arrow">→</b><span>Ценность</span><b class="arrow">→</b><span>Продвижение</span><b class="arrow">→</b><span>Коммуникация</span><b class="arrow">→</b><span>Анализ</span><b class="arrow">→</b><span>Улучшение</span>
+  </div>
+  <div class="grid" style="margin-top:35px">
+    <div class="card"><strong>Исследование</strong><p>Рынок, конкуренты, аудитория, спрос и проблемы пользователей.</p></div>
+    <div class="card"><strong>Продвижение</strong><p>Выбор каналов и создание сообщений, которые соответствуют аудитории.</p></div>
+    <div class="card"><strong>Анализ</strong><p>Проверка показателей: переходов, регистраций, покупок и других действий.</p></div>
+    <div class="card"><strong>Оптимизация</strong><p>Изменение стратегии на основе данных и проверка новых гипотез.</p></div>
+  </div>
+  <div class="bigquote">Современный подход: не угадывать, а формулировать гипотезы, проверять их и анализировать результат.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">04 • Digital</div><h2>Что изменил Интернет?</h2>
+  <div class="two">
+    <div>
+      <div class="card"><span class="badge">Раньше</span><h3 style="margin-top:14px">Компания → массовая реклама → аудитория</h3><p>Было сложнее точно понять, кто увидел сообщение, что его заинтересовало и какое действие он совершил.</p></div>
+      <div class="card" style="margin-top:16px"><span class="badge">Сегодня</span><h3 style="margin-top:14px">Компания → канал → пользователь → действие → данные</h3><p>Цифровая среда позволяет собирать данные о взаимодействии и быстрее корректировать кампании.</p></div>
+    </div>
+    <div class="callout"><h3>Ключевое изменение</h3><p>Маркетинг стал значительно более измеримым: можно связывать источники трафика, действия пользователя и бизнес-результат.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">05 • Реклама</div><h2>Online и Offline-реклама</h2>
+  <table>
+    <tr><th>OFFLINE</th><th>ONLINE</th></tr>
+    <tr><td>Телевидение</td><td>Сайты и рекламные сети</td></tr>
+    <tr><td>Радио</td><td>Видео и стриминговые платформы</td></tr>
+    <tr><td>Газеты и журналы</td><td>Поисковые системы</td></tr>
+    <tr><td>Билборды и наружная реклама</td><td>Социальные сети</td></tr>
+    <tr><td>Листовки и печатные материалы</td><td>Email и мессенджеры</td></tr>
+    <tr><td>Выставки и мероприятия</td><td>Мобильные приложения</td></tr>
+  </table>
+  <div class="bigquote">Главная особенность online: цифровые взаимодействия можно измерять, анализировать и оптимизировать.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">06 • Digital Marketing</div><h2>Что такое Digital Marketing?</h2>
+  <p><b>Digital Marketing</b> — продвижение продуктов, услуг и брендов с использованием цифровых каналов, технологий и данных.</p>
+  <div class="grid3">
+    <div class="card"><strong>🌐 Сайты</strong><p>Представление продукта и совершение целевого действия.</p></div>
+    <div class="card"><strong>🔎 Поиск</strong><p>Работа с запросами пользователей и поисковой выдачей.</p></div>
+    <div class="card"><strong>📱 Социальные сети</strong><p>Контент, общение и формирование сообщества.</p></div>
+    <div class="card"><strong>📧 Email</strong><p>Персональная коммуникация и рассылки.</p></div>
+    <div class="card"><strong>📢 Реклама</strong><p>Платное привлечение и возвращение аудитории.</p></div>
+    <div class="card"><strong>📊 Аналитика</strong><p>Данные о поведении пользователей и результатах.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">07 • Цикл</div><h2>Digital Marketing — это система</h2>
+  <div class="flow">
+    <span>Исследование</span><b class="arrow">→</b><span>Аудитория</span><b class="arrow">→</b><span>Стратегия</span><b class="arrow">→</b><span>Каналы</span><b class="arrow">→</b><span>Контент</span><b class="arrow">→</b><span>Действие</span><b class="arrow">→</b><span>Аналитика</span>
+  </div>
+  <div class="grid" style="margin-top:32px">
+    <div class="card"><strong>Исследование → аудитория</strong><p>Понимаем рынок и определяем, для кого предназначен продукт.</p></div>
+    <div class="card"><strong>Стратегия → каналы</strong><p>Определяем цели и выбираем, где взаимодействовать с пользователем.</p></div>
+    <div class="card"><strong>Контент → действие</strong><p>Создаём сообщение и предлагаем понятный следующий шаг.</p></div>
+    <div class="card"><strong>Аналитика → улучшение</strong><p>Измеряем результат и меняем то, что работает недостаточно хорошо.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">08 • Направления</div><h2>Основные направления интернет-маркетинга</h2>
+  <div class="grid3">
+    <div class="card"><span class="num">SEO</span><strong>Поисковая оптимизация</strong><p>Работа над видимостью сайта в поисковых системах.</p></div>
+    <div class="card"><span class="num">SMM</span><strong>Социальные сети</strong><p>Продвижение, контент, коммуникация и развитие сообщества.</p></div>
+    <div class="card"><span class="num">PPC</span><strong>Платная реклама</strong><p>Размещение объявлений с оплатой по выбранной модели, например за клик.</p></div>
+    <div class="card"><span class="num">CONTENT</span><strong>Контент-маркетинг</strong><p>Создание полезного и интересного контента для аудитории.</p></div>
+    <div class="card"><span class="num">EMAIL</span><strong>Email-маркетинг</strong><p>Коммуникация с пользователями через электронную почту.</p></div>
+    <div class="card"><span class="num">ANALYTICS</span><strong>Аналитика</strong><p>Сбор, интерпретация и использование данных для решений.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">09 • Воронка</div><h2>Как пользователь приходит к продукту?</h2>
+  <div class="flow">
+    <span>Внимание</span><b class="arrow">→</b><span>Интерес</span><b class="arrow">→</b><span>Изучение</span><b class="arrow">→</b><span>Решение</span><b class="arrow">→</b><span>Действие</span><b class="arrow">→</b><span>Возврат</span>
+  </div>
+  <div class="grid">
+    <div class="card"><strong>Внимание</strong><p>Пользователь впервые узнаёт о продукте.</p></div>
+    <div class="card"><strong>Интерес и изучение</strong><p>Переходит на сайт, смотрит информацию, сравнивает варианты.</p></div>
+    <div class="card"><strong>Решение и действие</strong><p>Покупает, регистрируется, оставляет заявку или выполняет другую цель.</p></div>
+    <div class="card"><strong>Возврат</strong><p>Возвращается к продукту и формирует повторное взаимодействие.</p></div>
+  </div>
+  <div class="bigquote">Задача маркетинга — сделать переход между этапами понятным и эффективным.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">10 • Коммуникация</div><h2>Каналы коммуникации</h2>
+  <div class="grid3">
+    <div class="card"><strong>🔎 Поиск</strong><p>Пользователь сам формулирует потребность и ищет информацию.</p></div>
+    <div class="card"><strong>🌐 Сайт</strong><p>Центральная площадка: информация о продукте и целевые действия.</p></div>
+    <div class="card"><strong>📱 Соцсети</strong><p>Публикации, видео, комментарии и развитие сообщества.</p></div>
+    <div class="card"><strong>📧 Email</strong><p>Рассылки, уведомления, предложения и удержание аудитории.</p></div>
+    <div class="card"><strong>💬 Мессенджеры</strong><p>Быстрый прямой контакт и поддержка пользователя.</p></div>
+    <div class="card"><strong>🎬 Видео</strong><p>Демонстрация продукта, обучение и создание интереса.</p></div>
+  </div>
+  <div class="bigquote">Один продукт может использовать несколько каналов одновременно. Важно не количество каналов, а соответствие аудитории и цели.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">11 • Аудитория</div><h2>Что такое целевая аудитория?</h2>
+  <p><b>Целевая аудитория (ЦА)</b> — группа людей, для которых предназначен продукт и которым потенциально нужна его ценность.</p>
+  <div class="two">
+    <div class="card">
+      <span class="badge">Пример</span><h3 style="margin-top:14px">Платформа для изучения программирования</h3>
+      <p>Возможные сегменты: школьники, студенты, начинающие разработчики, люди, осваивающие новую профессию.</p>
+    </div>
+    <div class="checklist">
+      <div class="item"><b>01</b><span>У разных сегментов разные потребности.</span></div>
+      <div class="item"><b>02</b><span>Они могут использовать разные каналы.</span></div>
+      <div class="item"><b>03</b><span>Им нужны разные аргументы и формулировки.</span></div>
+      <div class="item"><b>04</b><span>Поэтому продвижение начинается с вопроса «Для кого продукт?»</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">12 • Метрики</div><h2>Что такое конверсия?</h2>
+  <p><b>Конверсия</b> — доля пользователей, совершивших целевое действие, относительно общего числа пользователей на выбранном этапе.</p>
+  <div class="two">
+    <div class="card">
+      <span class="num">ПРИМЕР</span>
+      <h3 style="font-size:34px;margin-top:14px">1 000 → 100</h3>
+      <p>1000 человек посетили сайт. 100 зарегистрировались.</p>
+      <div class="bigquote" style="font-size:28px">100 ÷ 1000 × 100% = <span class="red">10%</span></div>
+    </div>
+    <div class="checklist">
+      <div class="item"><b>✓</b><span>Регистрация</span></div>
+      <div class="item"><b>✓</b><span>Покупка</span></div>
+      <div class="item"><b>✓</b><span>Заявка</span></div>
+      <div class="item"><b>✓</b><span>Подписка / скачивание / заказ</span></div>
+    </div>
+  </div>
+  <div class="bigquote">Недостаточно сказать «рекламу увидело много людей». Нужно понимать, какое целевое действие она принесла.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">13 • Вирусный маркетинг</div><h2>Viral Marketing</h2>
+  <p><b>Вирусный маркетинг</b> — распространение информации о продукте за счёт того, что пользователи сами передают контент другим людям.</p>
+  <div class="flow"><span>Контент</span><b class="arrow">→</b><span>Интерес / эмоция</span><b class="arrow">→</b><span>Пользователь делится</span><b class="arrow">→</b><span>Новые пользователи</span></div>
+  <div class="grid3" style="margin-top:28px">
+    <div class="card"><strong>😂 Смешно</strong><p>Контент вызывает желание показать его друзьям.</p></div>
+    <div class="card"><strong>😮 Необычно</strong><p>Неожиданность повышает вероятность обсуждения.</p></div>
+    <div class="card"><strong>💡 Полезно</strong><p>Практическая ценность мотивирует сохранять и отправлять.</p></div>
+  </div>
+  <div class="bigquote">Вирусность нельзя полностью гарантировать: можно создать условия для распространения, но реакция аудитории непредсказуема.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">14 • Нестандартное продвижение</div><h2>Партизанский маркетинг</h2>
+  <p><b>Партизанский маркетинг</b> — использование нестандартных и креативных способов продвижения, которые привлекают внимание не только масштабом бюджета.</p>
+  <div class="grid">
+    <div class="card"><strong>НЕОБЫЧНАЯ ИДЕЯ</strong><p>Сообщение или формат отличаются от привычной рекламы.</p></div>
+    <div class="card"><strong>ВНИМАНИЕ</strong><p>Пользователь замечает необычный ход и запоминает его.</p></div>
+    <div class="card"><strong>ОБСУЖДЕНИЕ</strong><p>Идея становится поводом для разговора и распространения.</p></div>
+    <div class="card"><strong>ЗАПОМИНАЕМОСТЬ</strong><p>Главная ставка — креативность, неожиданность и сильная ассоциация.</p></div>
+  </div>
+  <div class="bigquote">Партизанский подход: <span class="red">идея + внимание + обсуждение</span>.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">15 • Профессии</div><h2>Кто работает в Digital?</h2>
+  <div class="grid3">
+    <div class="card"><strong>Digital-маркетолог</strong><p>Стратегия, цели и координация продвижения.</p></div>
+    <div class="card"><strong>SEO-специалист</strong><p>Поисковая оптимизация и видимость сайта.</p></div>
+    <div class="card"><strong>SMM-специалист</strong><p>Социальные сети и коммуникация с аудиторией.</p></div>
+    <div class="card"><strong>Контент-менеджер</strong><p>Планирование и размещение контента.</p></div>
+    <div class="card"><strong>PPC-специалист</strong><p>Рекламные кампании и их эффективность.</p></div>
+    <div class="card"><strong>Web-аналитик</strong><p>Данные, показатели и выводы.</p></div>
+    <div class="card"><strong>UX/UI-специалист</strong><p>Удобство и интерфейс цифрового продукта.</p></div>
+    <div class="card"><strong>Разработчик</strong><p>Техническая реализация и поддержка продукта.</p></div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">16 • IT + Marketing</div><h2>Почему это важно разработчику?</h2>
+  <div class="two">
+    <div>
+      <div class="card"><strong>Разработчик</strong><p>Создаёт техническую часть продукта.</p></div>
+      <div class="card" style="margin-top:12px"><strong>UX/UI</strong><p>Проектирует взаимодействие пользователя с продуктом.</p></div>
+      <div class="card" style="margin-top:12px"><strong>Маркетолог</strong><p>Определяет аудиторию и способы продвижения.</p></div>
+      <div class="card" style="margin-top:12px"><strong>Аналитик</strong><p>Изучает поведение пользователей и результат.</p></div>
+    </div>
+    <div class="callout">
+      <h3>Цифровой продукт — это система</h3>
+      <p style="margin-bottom:18px">Frontend + Backend + Data + UX + Marketing + Analytics работают на общий результат.</p>
+      <p><b>Поэтому разработчику полезно понимать, кто пользуется продуктом, как его находят и какие действия совершают.</b></p>
+    </div>
+  </div>
+</section>
+
+<section class="slide">
+  <div class="kicker">17 • Мини-кейс</div><h2>Запускаем IT-продукт</h2>
+  <div class="card">
+    <span class="badge">Пример</span>
+    <h3 style="font-size:30px;margin-top:14px">StudyFlow — приложение для организации учебных задач</h3>
+    <p>Нужно привлечь первых пользователей. Можно сразу запустить рекламу, но без понимания аудитории это будет предположение.</p>
+  </div>
+  <div class="flow"><span>Изучить аудиторию</span><b class="arrow">→</b><span>Понять проблему</span><b class="arrow">→</b><span>Сформировать предложение</span><b class="arrow">→</b><span>Выбрать каналы</span><b class="arrow">→</b><span>Продвигать</span><b class="arrow">→</b><span>Измерить</span></div>
+  <div class="bigquote">Маркетинг помогает ответить не только на вопрос «как привлечь?», но и на вопрос «кого, зачем и каким способом?»</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">18 • Практика</div><h2>Мини-задание: «Продай цифровой продукт»</h2>
+  <p>Работа в парах или мини-группах. Выберите любой цифровой продукт: приложение, игру, сайт, онлайн-сервис, интернет-магазин или образовательную платформу.</p>
+  <div class="grid">
+    <div class="item"><b>01</b><span><b>Продукт:</b> что создаём?</span></div>
+    <div class="item"><b>02</b><span><b>Проблема:</b> какую потребность решаем?</span></div>
+    <div class="item"><b>03</b><span><b>ЦА:</b> кто пользователь?</span></div>
+    <div class="item"><b>04</b><span><b>Каналы:</b> где пользователь узнает о продукте?</span></div>
+    <div class="item"><b>05</b><span><b>Действие:</b> что должен сделать пользователь?</span></div>
+    <div class="item"><b>06</b><span><b>Аргумент:</b> почему он должен заинтересоваться?</span></div>
+  </div>
+  <div class="bigquote">На представление идеи — 1–2 минуты на команду.</div>
+</section>
+
+<section class="slide">
+  <div class="kicker">19 • Итоги</div><h2>7 главных идей</h2>
+  <div class="grid">
+    <div class="card"><span class="num">01</span><strong>Маркетинг ≠ реклама</strong><p>Реклама — только часть системы.</p></div>
+    <div class="card"><span class="num">02</span><strong>Digital = каналы + технологии + данные</strong><p>Цифровая среда позволяет измерять взаимодействие.</p></div>
+    <div class="card"><span class="num">03</span><strong>В центре — пользователь</strong><p>Нужно понимать его потребности и контекст.</p></div>
+    <div class="card"><span class="num">04</span><strong>Нужна цель</strong><p>Каждая активность должна иметь понятный результат.</p></div>
+    <div class="card"><span class="num">05</span><strong>Нужна аналитика</strong><p>Результаты должны быть измеримыми.</p></div>
+    <div class="card"><span class="num">06</span><strong>Гипотезы проверяются</strong><p>Неудачный результат — повод улучшить подход.</p></div>
+    <div class="card"><span class="num">07</span><strong>IT и маркетинг связаны</strong><p>Успешный цифровой продукт создаётся командой.</p></div>
+  </div>
+  <div class="bigquote">Пользователь → ценность → канал → действие → данные → улучшение</div>
+</section>
+
+<section class="slide dz">
+  <div class="kicker">20 • Домашнее задание</div>
+  <h2>ДЗ: маркетинговый анализ цифрового продукта</h2>
+  <p><b>Выберите любой цифровой продукт</b>: мобильное приложение, сайт, игру, онлайн-сервис, интернет-магазин или образовательную платформу.</p>
+  <div class="checklist">
+    <div class="item"><b>01</b><span><b>Продукт</b> — что это и какую задачу решает?</span></div>
+    <div class="item"><b>02</b><span><b>Целевая аудитория</b> — кто потенциальный пользователь?</span></div>
+    <div class="item"><b>03</b><span><b>Потребность</b> — какую проблему пользователя решает продукт?</span></div>
+    <div class="item"><b>04</b><span><b>Каналы</b> — выберите 3 возможных канала продвижения.</span></div>
+    <div class="item"><b>05</b><span><b>Целевое действие</b> — что должен сделать пользователь?</span></div>
+    <div class="item"><b>06</b><span><b>Обоснование</b> — почему выбранные каналы подходят этой аудитории?</span></div>
+  </div>
+  <div class="card" style="margin-top:18px"><strong>Формат</strong><p>1–2 страницы или 5–7 слайдов. На следующем занятии используем результаты как основу для разработки digital-стратегии.</p></div>
+</section>
+
+<footer>
+  <span id="counter">01 / 20</span>
+  <span>ДУП.05 • ИНТЕРНЕТ-МАРКЕТИНГ</span>
+  <div class="bar"><i id="progress"></i></div>
+</footer>
+</div>
+
+<div class="controls">
+<button id="prev" aria-label="Предыдущий">←</button>
+<button id="next" aria-label="Следующий">→</button>
+</div>
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+let i=0;
+function show(n){
+  i=(n+slides.length)%slides.length;
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  document.getElementById('counter').textContent=String(i+1).padStart(2,'0')+' / '+slides.length;
+  document.getElementById('progress').style.width=((i+1)/slides.length*100)+'%';
+}
+document.getElementById('next').onclick=()=>show(i+1);
+document.getElementById('prev').onclick=()=>show(i-1);
+document.addEventListener('keydown',e=>{
+ if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(i+1)}
+ if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(i-1)}
+ if(e.key==='Home')show(0);
+ if(e.key==='End')show(slides.length-1);
+});
+let sx=null;
+document.addEventListener('touchstart',e=>sx=e.changedTouches[0].clientX,{passive:true});
+document.addEventListener('touchend',e=>{
+ if(sx===null)return; const dx=e.changedTouches[0].clientX-sx;
+ if(Math.abs(dx)>50) show(i+(dx<0?1:-1)); sx=null;
+},{passive:true});
+show(0);
+</script>
+</body>
+</html>
