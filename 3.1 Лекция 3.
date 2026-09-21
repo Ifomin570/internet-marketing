@@ -1,0 +1,1847 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Работа с целевой аудиторией</title>
+
+<style>
+:root{
+    --red:#e3262e;
+    --red2:#ff4b52;
+    --dark:#17191d;
+    --text:#25282d;
+    --muted:#737880;
+    --bg:#f7f7f8;
+    --card:#ffffff;
+    --line:#e5e6e8;
+    --soft:#fff0f1;
+    --green:#25a66a;
+    --blue:#3778e5;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+body{
+    font-family:Inter,Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+}
+
+/* TOP LINE */
+
+body:before{
+    content:"";
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:5px;
+    background:linear-gradient(90deg,var(--red),var(--red2));
+    z-index:1000;
+}
+
+/* PRESENTATION */
+
+.presentation{
+    width:100%;
+    height:100vh;
+    position:relative;
+}
+
+.slide{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    padding:55px 7vw 65px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    opacity:0;
+    visibility:hidden;
+    transform:translateX(50px);
+    transition:
+        opacity .35s ease,
+        transform .35s ease,
+        visibility .35s;
+}
+
+.slide.active{
+    opacity:1;
+    visibility:visible;
+    transform:translateX(0);
+}
+
+.slide.prev{
+    transform:translateX(-50px);
+}
+
+.container{
+    width:100%;
+    max-width:1180px;
+    max-height:calc(100vh - 120px);
+    overflow:auto;
+    scrollbar-width:none;
+}
+
+.container::-webkit-scrollbar{
+    display:none;
+}
+
+/* TEXT */
+
+.label{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--red);
+    font-size:13px;
+    font-weight:800;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    margin-bottom:16px;
+}
+
+.label:before{
+    content:"";
+    width:24px;
+    height:3px;
+    background:var(--red);
+    border-radius:10px;
+}
+
+h1{
+    font-size:clamp(46px,6vw,82px);
+    line-height:.98;
+    letter-spacing:-.045em;
+    margin:0 0 25px;
+}
+
+h2{
+    font-size:clamp(34px,4vw,54px);
+    line-height:1.04;
+    letter-spacing:-.04em;
+    margin:0 0 28px;
+}
+
+h3{
+    font-size:21px;
+    line-height:1.15;
+    margin:0 0 9px;
+}
+
+p{
+    color:var(--muted);
+    font-size:17px;
+    margin:7px 0;
+}
+
+.lead{
+    font-size:21px;
+    line-height:1.5;
+    max-width:800px;
+}
+
+.red{
+    color:var(--red);
+}
+
+/* CARDS */
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.grid2{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+}
+
+.card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 8px 30px rgba(25,28,35,.045);
+}
+
+.card.soft{
+    background:var(--soft);
+    border-color:#ffd4d6;
+}
+
+.icon{
+    width:44px;
+    height:44px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:13px;
+    background:var(--soft);
+    color:var(--red);
+    font-size:19px;
+    font-weight:900;
+    margin-bottom:15px;
+}
+
+.number-big{
+    font-size:42px;
+    line-height:1;
+    color:var(--red);
+    font-weight:900;
+    margin-bottom:13px;
+}
+
+/* FLOW */
+
+.flow{
+    display:flex;
+    gap:10px;
+    margin:28px 0;
+}
+
+.flow-card{
+    flex:1;
+    position:relative;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:19px;
+    padding:21px 16px;
+    text-align:center;
+}
+
+.flow-card:not(:last-child):after{
+    content:"→";
+    position:absolute;
+    right:-17px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:22px;
+    font-weight:900;
+    color:var(--red);
+    z-index:5;
+}
+
+.flow-number{
+    color:var(--red);
+    font-weight:900;
+    font-size:12px;
+    margin-bottom:7px;
+}
+
+/* AIDA */
+
+.aida{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:13px;
+}
+
+.aida-card{
+    min-height:210px;
+    border-radius:24px;
+    padding:25px;
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+
+.aida-card:nth-child(1){background:#25282d}
+.aida-card:nth-child(2){background:#41464e}
+.aida-card:nth-child(3){background:#d72e36}
+.aida-card:nth-child(4){background:#ff4b52}
+
+.aida-letter{
+    font-size:48px;
+    font-weight:900;
+    line-height:1;
+    margin-bottom:12px;
+}
+
+.aida-card p{
+    color:#fff;
+    opacity:.8;
+    font-size:14px;
+}
+
+/* FUNNEL */
+
+.funnel{
+    width:80%;
+    max-width:780px;
+    margin:5px auto 20px;
+}
+
+.funnel-row{
+    margin:8px auto;
+    padding:14px;
+    text-align:center;
+    border-radius:13px;
+    color:white;
+    font-weight:800;
+}
+
+.funnel1{width:100%;background:#25282d}
+.funnel2{width:83%;background:#464b53}
+.funnel3{width:66%;background:#6f747c}
+.funnel4{width:49%;background:#d72e36}
+.funnel5{width:32%;background:#ff4b52}
+
+/* SEGMENTS */
+
+.segment-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
+}
+
+.segment{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:22px 13px;
+    text-align:center;
+}
+
+.segment-icon{
+    font-size:28px;
+    margin-bottom:10px;
+}
+
+.segment strong{
+    display:block;
+    font-size:14px;
+}
+
+.segment p{
+    font-size:13px;
+}
+
+/* PERSONA */
+
+.persona{
+    display:grid;
+    grid-template-columns:270px 1fr;
+    gap:18px;
+}
+
+.profile{
+    background:var(--dark);
+    color:white;
+    border-radius:25px;
+    padding:28px;
+}
+
+.avatar{
+    width:75px;
+    height:75px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--soft);
+    color:var(--red);
+    font-size:30px;
+    font-weight:900;
+    margin-bottom:17px;
+}
+
+.profile p{
+    color:#c8cbd0;
+    font-size:15px;
+}
+
+.info-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.info{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:19px;
+}
+
+.info b{
+    display:block;
+    color:var(--red);
+    margin-bottom:5px;
+}
+
+/* EMPATHY */
+
+.empathy{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+}
+
+.empathy-card{
+    background:white;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:22px;
+}
+
+.empathy-card h3{
+    color:var(--red);
+}
+
+/* SCENARIO */
+
+.scenario{
+    max-width:900px;
+    margin:auto;
+}
+
+.scenario-row{
+    display:grid;
+    grid-template-columns:45px 1fr;
+    gap:15px;
+    align-items:center;
+    background:white;
+    border:1px solid var(--line);
+    border-radius:17px;
+    padding:13px 18px;
+    margin-bottom:9px;
+}
+
+.scenario-number{
+    width:38px;
+    height:38px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    background:var(--soft);
+    color:var(--red);
+    font-weight:900;
+}
+
+/* HOMEWORK */
+
+.homework{
+    background:var(--dark);
+    color:white;
+}
+
+.homework .label{
+    color:var(--red2);
+}
+
+.homework h2{
+    color:white;
+}
+
+.homework .lead{
+    color:#c8cbd0;
+}
+
+.hw{
+    background:#23262b;
+    border:1px solid #393d44;
+    border-radius:24px;
+    padding:23px 27px;
+    margin-top:20px;
+}
+
+.hw-row{
+    display:grid;
+    grid-template-columns:35px 1fr;
+    gap:12px;
+    padding:10px 0;
+    border-bottom:1px solid #373b42;
+}
+
+.hw-row:last-child{
+    border-bottom:none;
+}
+
+.hw-number{
+    color:var(--red2);
+    font-weight:900;
+}
+
+/* NAVIGATION */
+
+.nav{
+    position:fixed;
+    bottom:22px;
+    left:50%;
+    transform:translateX(-50%);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    z-index:100;
+}
+
+.nav button{
+    width:44px;
+    height:44px;
+    border:1px solid var(--line);
+    background:white;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:19px;
+    transition:.2s;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.nav button:hover{
+    background:var(--red);
+    color:white;
+    border-color:var(--red);
+}
+
+.counter{
+    min-width:85px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 13px;
+    border-radius:20px;
+    background:white;
+    border:1px solid var(--line);
+    font-size:13px;
+    font-weight:800;
+}
+
+/* PROGRESS */
+
+.progress{
+    position:fixed;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:4px;
+    background:#e8e8ea;
+    z-index:100;
+}
+
+.progress-bar{
+    height:100%;
+    width:0;
+    background:var(--red);
+    transition:.35s;
+}
+
+/* SIDE INFO */
+
+.slide-title{
+    position:fixed;
+    top:22px;
+    left:7vw;
+    font-size:12px;
+    color:#999da4;
+    z-index:20;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:850px){
+
+    .slide{
+        padding:45px 25px 80px;
+    }
+
+    .grid,
+    .grid2,
+    .aida,
+    .persona,
+    .info-grid,
+    .empathy{
+        grid-template-columns:1fr;
+    }
+
+    .segment-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .flow{
+        flex-direction:column;
+    }
+
+    .flow-card:not(:last-child):after{
+        content:"↓";
+        right:50%;
+        top:auto;
+        bottom:-24px;
+        transform:translateX(50%);
+    }
+
+    .persona{
+        grid-template-columns:1fr;
+    }
+
+    .container{
+        max-height:calc(100vh - 100px);
+    }
+
+    h1{
+        font-size:48px;
+    }
+
+    h2{
+        font-size:37px;
+    }
+
+    .lead{
+        font-size:18px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="presentation">
+
+<!-- ================= SLIDE 1 ================= -->
+
+<section class="slide active">
+<div class="slide-title">ДУП.05 · Интернет-маркетинг</div>
+
+<div class="container">
+
+<div class="label">Тема занятия</div>
+
+<h1>
+Работа с<br>
+<span class="red">целевой аудиторией</span>
+</h1>
+
+<p class="lead">
+Как понять, кто наш пользователь, чего он хочет,
+какую проблему пытается решить и почему выбирает
+один продукт вместо другого.
+</p>
+
+<div class="grid" style="margin-top:35px">
+
+<div class="card">
+<div class="icon">01</div>
+<strong>Понять пользователя</strong>
+<p>Кто он и что ему нужно?</p>
+</div>
+
+<div class="card">
+<div class="icon">02</div>
+<strong>Разделить аудиторию</strong>
+<p>Какие группы пользователей существуют?</p>
+</div>
+
+<div class="card">
+<div class="icon">03</div>
+<strong>Создать портрет</strong>
+<p>Как выглядит типичный пользователь?</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 2 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Начинаем с основ</div>
+
+<h2>Что такое<br><span class="red">целевая аудитория?</span></h2>
+
+<div class="grid2">
+
+<div class="card soft">
+
+<h3>Простое определение</h3>
+
+<p style="font-size:20px;color:var(--text)">
+Целевая аудитория — это группа людей,
+для которых предназначен наш продукт,
+услуга или предложение.
+</p>
+
+</div>
+
+<div class="card">
+
+<h3>Главный вопрос</h3>
+
+<p style="font-size:28px;color:var(--text);font-weight:800">
+«Для кого мы это делаем?»
+</p>
+
+<p>
+Если мы не знаем пользователя,
+нам сложно правильно подобрать
+рекламу, контент и предложение.
+</p>
+
+</div>
+
+</div>
+
+<div class="card" style="margin-top:18px">
+
+<strong>Пример</strong>
+
+<p>
+Если мы рекламируем онлайн-курс по программированию,
+«все люди в интернете» — это слишком широкая аудитория.
+Нам нужно определить конкретные группы людей,
+которым этот курс действительно нужен.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 3 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Главная идея</div>
+
+<h2>Почему нельзя<br><span class="red">продавать всем?</span></h2>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="number-big">01</div>
+
+<h3>Разные потребности</h3>
+
+<p>
+Разным людям нужен разный результат
+от одного и того же продукта.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number-big">02</div>
+
+<h3>Разные мотивы</h3>
+
+<p>
+Одному важна цена, другому качество,
+третьему скорость или удобство.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number-big">03</div>
+
+<h3>Разные сообщения</h3>
+
+<p>
+Одно рекламное сообщение не обязательно
+одинаково хорошо работает для всех.
+</p>
+
+</div>
+
+</div>
+
+<div class="flow">
+
+<div class="flow-card">
+<div class="flow-number">БЫЛО</div>
+Огромная аудитория
+</div>
+
+<div class="flow-card">
+<div class="flow-number">АНАЛИЗ</div>
+Разделяем группы
+</div>
+
+<div class="flow-card">
+<div class="flow-number">ВЫБОР</div>
+Основной сегмент
+</div>
+
+<div class="flow-card">
+<div class="flow-number">РЕЗУЛЬТАТ</div>
+Точное предложение
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 4 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Потребности</div>
+
+<h2>Что на самом деле<br><span class="red">нужно пользователю?</span></h2>
+
+<p class="lead">
+Человек редко покупает продукт просто ради самого продукта.
+Он хочет получить определённый результат.
+</p>
+
+<div class="flow">
+
+<div class="flow-card">
+<div class="icon">!</div>
+<h3>Проблема</h3>
+<p>Что человека не устраивает?</p>
+</div>
+
+<div class="flow-card">
+<div class="icon">?</div>
+<h3>Потребность</h3>
+<p>Что ему необходимо?</p>
+</div>
+
+<div class="flow-card">
+<div class="icon">→</div>
+<h3>Решение</h3>
+<p>Что может помочь?</p>
+</div>
+
+<div class="flow-card">
+<div class="icon">✓</div>
+<h3>Результат</h3>
+<p>Что он получает?</p>
+</div>
+
+</div>
+
+<div class="card soft">
+
+<strong>Пример</strong>
+
+<p style="font-size:18px;color:var(--text)">
+Проблема: «Мой сайт выглядит устаревшим».
+<br>
+Потребность: «Мне нужен современный сайт».
+<br>
+Решение: «Создать новый лендинг».
+<br>
+Результат: «Получить современное представление бизнеса».
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 5 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Пользователи</div>
+
+<h2>Какие бывают<br><span class="red">пользователи?</span></h2>
+
+<div class="grid">
+
+<div class="card">
+
+<div class="number-big">01</div>
+
+<h3>Потенциальный</h3>
+
+<p>
+Может быть заинтересован,
+но пока не знает о продукте.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number-big">02</div>
+
+<h3>Заинтересованный</h3>
+
+<p>
+Уже ищет информацию,
+сравнивает варианты.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number-big">03</div>
+
+<h3>Клиент</h3>
+
+<p>
+Совершил нужное действие:
+купил, зарегистрировался или заказал.
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="number-big">04</div>
+
+<h3>Постоянный клиент</h3>
+
+<p>
+Возвращается и может
+рекомендовать продукт другим.
+</p>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 6 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Поведение</div>
+
+<h2>Как пользователь<br><span class="red">принимает решение?</span></h2>
+
+<div class="flow">
+
+<div class="flow-card">
+<div class="flow-number">01</div>
+<strong>Появилась потребность</strong>
+<p>«Мне нужно решить проблему»</p>
+</div>
+
+<div class="flow-card">
+<div class="flow-number">02</div>
+<strong>Начинает поиск</strong>
+<p>Поисковики, соцсети, рекомендации</p>
+</div>
+
+<div class="flow-card">
+<div class="flow-number">03</div>
+<strong>Сравнивает</strong>
+<p>Цена, качество, отзывы, условия</p>
+</div>
+
+<div class="flow-card">
+<div class="flow-number">04</div>
+<strong>Выбирает</strong>
+<p>Останавливается на варианте</p>
+</div>
+
+<div class="flow-card">
+<div class="flow-number">05</div>
+<strong>Действует</strong>
+<p>Покупает или оставляет заявку</p>
+</div>
+
+</div>
+
+<div class="card soft">
+
+<strong>Для маркетолога важно</strong>
+
+<p>
+На каждом этапе пользователю нужна разная информация.
+Поэтому реклама, сайт и контент должны соответствовать
+его текущему этапу.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 7 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Модель поведения</div>
+
+<h2>AIDA: путь<br><span class="red">от внимания к действию</span></h2>
+
+<div class="aida">
+
+<div class="aida-card">
+<div class="aida-letter">A</div>
+<h3>Attention</h3>
+<p>Внимание</p>
+<p>Человек замечает предложение.</p>
+</div>
+
+<div class="aida-card">
+<div class="aida-letter">I</div>
+<h3>Interest</h3>
+<p>Интерес</p>
+<p>Начинает изучать продукт.</p>
+</div>
+
+<div class="aida-card">
+<div class="aida-letter">D</div>
+<h3>Desire</h3>
+<p>Желание</p>
+<p>Понимает ценность продукта.</p>
+</div>
+
+<div class="aida-card">
+<div class="aida-letter">A</div>
+<h3>Action</h3>
+<p>Действие</p>
+<p>Покупает или оставляет заявку.</p>
+</div>
+
+</div>
+
+<div class="card" style="margin-top:20px">
+
+<strong>Пример сайта</strong>
+
+<p>
+Заголовок привлекает внимание →
+описание вызывает интерес →
+преимущества формируют желание →
+кнопка предлагает действие.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 8 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Воронка продаж</div>
+
+<h2>Почему пользователей<br><span class="red">становится меньше?</span></h2>
+
+<div class="funnel">
+
+<div class="funnel-row funnel1">
+Увидели предложение
+</div>
+
+<div class="funnel-row funnel2">
+Заинтересовались
+</div>
+
+<div class="funnel-row funnel3">
+Изучили информацию
+</div>
+
+<div class="funnel-row funnel4">
+Оставили заявку
+</div>
+
+<div class="funnel-row funnel5">
+Совершили покупку
+</div>
+
+</div>
+
+<div class="grid2">
+
+<div class="card">
+<strong>Не все готовы покупать</strong>
+<p>
+Часть людей просто узнаёт о продукте,
+часть интересуется, а часть принимает решение.
+</p>
+</div>
+
+<div class="card">
+<strong>Что изучает маркетолог?</strong>
+<p>
+На каком этапе пользователи перестают двигаться
+к целевому действию.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 9 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Сегментация</div>
+
+<h2>Как разделить<br><span class="red">аудиторию на группы?</span></h2>
+
+<p class="lead">
+Сегментация — это разделение большой аудитории
+на группы с общими признаками, потребностями
+или поведением.
+</p>
+
+<div class="segment-grid">
+
+<div class="segment">
+<div class="segment-icon">👤</div>
+<strong>Демография</strong>
+<p>Возраст, образование, профессия</p>
+</div>
+
+<div class="segment">
+<div class="segment-icon">📍</div>
+<strong>География</strong>
+<p>Город, регион, страна</p>
+</div>
+
+<div class="segment">
+<div class="segment-icon">🧠</div>
+<strong>Психология</strong>
+<p>Ценности и интересы</p>
+</div>
+
+<div class="segment">
+<div class="segment-icon">🔎</div>
+<strong>Поведение</strong>
+<p>Поиск и действия</p>
+</div>
+
+<div class="segment">
+<div class="segment-icon">⚡</div>
+<strong>Потребности</strong>
+<p>Проблемы и задачи</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 10 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Пример сегментации</div>
+
+<h2>«Студенты» — это<br><span class="red">ещё не сегмент</span></h2>
+
+<div class="grid2">
+
+<div class="card">
+
+<h3>Слишком широко</h3>
+
+<p style="font-size:22px;color:var(--text)">
+«Студенты»
+</p>
+
+<p>
+Непонятно, какие у них интересы,
+цели, проблемы и потребности.
+</p>
+
+</div>
+
+<div class="card soft">
+
+<h3>Более конкретно</h3>
+
+<p style="font-size:22px;color:var(--text)">
+«Студенты колледжа,
+изучающие программирование»
+</p>
+
+<p>
+Им могут быть нужны практика,
+понятные материалы, проекты
+и помощь в обучении.
+</p>
+
+</div>
+
+</div>
+
+<div class="flow">
+
+<div class="flow-card">Большая аудитория</div>
+<div class="flow-card">Сегменты</div>
+<div class="flow-card">Анализ</div>
+<div class="flow-card">
+<strong class="red">Главный сегмент</strong>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 11 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Выбор сегмента</div>
+
+<h2>На кого ориентироваться<br><span class="red">в первую очередь?</span></h2>
+
+<div class="grid2">
+
+<div class="card">
+<h3>Есть потребность?</h3>
+<p>
+У группы действительно существует проблема,
+которую решает наш продукт?
+</p>
+</div>
+
+<div class="card">
+<h3>Есть интерес?</h3>
+<p>
+Люди этой группы могут быть заинтересованы
+в предложении?
+</p>
+</div>
+
+<div class="card">
+<h3>Можно найти?</h3>
+<p>
+Есть ли каналы, через которые можно
+достучаться до этой аудитории?
+</p>
+</div>
+
+<div class="card">
+<h3>Есть ценность?</h3>
+<p>
+Действительно ли продукт полезен
+для этой группы?
+</p>
+</div>
+
+</div>
+
+<div class="card soft" style="margin-top:18px">
+
+<strong>Результат</strong>
+
+<p style="margin:0">
+Мы не просто говорим «наша аудитория — все».
+Мы выделяем конкретную группу,
+которую можем подробно изучить.
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 12 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Persona</div>
+
+<h2>Создаём<br><span class="red">портрет пользователя</span></h2>
+
+<p class="lead">
+Persona — собирательный образ типичного представителя
+выбранного сегмента.
+</p>
+
+<div class="persona">
+
+<div class="profile">
+
+<div class="avatar">А</div>
+
+<h3>Алексей</h3>
+
+<p>Студент колледжа</p>
+
+<p>
+Интересуется программированием
+и хочет создавать реальные проекты.
+</p>
+
+</div>
+
+<div class="info-grid">
+
+<div class="info">
+<b>Возраст</b>
+17–19 лет
+</div>
+
+<div class="info">
+<b>Цель</b>
+Создавать реальные проекты
+</div>
+
+<div class="info">
+<b>Проблема</b>
+Сложная и непонятная информация
+</div>
+
+<div class="info">
+<b>Мотивация</b>
+Получить практический результат
+</div>
+
+<div class="info">
+<b>Страх</b>
+Не разобраться
+</div>
+
+<div class="info">
+<b>Что важно</b>
+Понятные инструкции и примеры
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 13 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Карта эмпатии</div>
+
+<h2>Посмотрим<br><span class="red">глазами пользователя</span></h2>
+
+<p class="lead">
+Карта эмпатии помогает понять,
+что происходит с человеком до покупки.
+</p>
+
+<div class="empathy">
+
+<div class="empathy-card">
+<h3>💭 Что думает?</h3>
+<p>Какие вопросы и мысли у него возникают?</p>
+</div>
+
+<div class="empathy-card">
+<h3>❤️ Что чувствует?</h3>
+<p>Какие страхи, желания и эмоции испытывает?</p>
+</div>
+
+<div class="empathy-card">
+<h3>👀 Что видит?</h3>
+<p>Какие предложения и информацию замечает?</p>
+</div>
+
+<div class="empathy-card">
+<h3>👂 Что слышит?</h3>
+<p>Что говорят друзья, блогеры, коллеги?</p>
+</div>
+
+<div class="empathy-card">
+<h3>🗣 Что говорит?</h3>
+<p>Как он описывает свою проблему?</p>
+</div>
+
+<div class="empathy-card">
+<h3>🚶 Что делает?</h3>
+<p>Какие действия предпринимает?</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 14 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Пользовательский сценарий</div>
+
+<h2>Путь пользователя<br><span class="red">от проблемы к действию</span></h2>
+
+<div class="scenario">
+
+<div class="scenario-row">
+<div class="scenario-number">1</div>
+<div>
+<strong>Возникает проблема</strong>
+<p>Человек понимает, что ему нужно что-то решить.</p>
+</div>
+</div>
+
+<div class="scenario-row">
+<div class="scenario-number">2</div>
+<div>
+<strong>Начинает поиск</strong>
+<p>Использует поисковики, сайты, социальные сети.</p>
+</div>
+</div>
+
+<div class="scenario-row">
+<div class="scenario-number">3</div>
+<div>
+<strong>Сравнивает варианты</strong>
+<p>Смотрит цену, характеристики, отзывы и условия.</p>
+</div>
+</div>
+
+<div class="scenario-row">
+<div class="scenario-number">4</div>
+<div>
+<strong>Принимает решение</strong>
+<p>Выбирает подходящее предложение.</p>
+</div>
+</div>
+
+<div class="scenario-row">
+<div class="scenario-number">5</div>
+<div>
+<strong>Совершает действие</strong>
+<p>Покупает, регистрируется или оставляет заявку.</p>
+</div>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 15 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Связываем всё вместе</div>
+
+<h2>От аудитории<br><span class="red">к маркетинговому решению</span></h2>
+
+<div class="flow">
+
+<div class="flow-card">
+<strong>Аудитория</strong>
+<p>Кто вообще может быть нашим пользователем?</p>
+</div>
+
+<div class="flow-card">
+<strong>Сегмент</strong>
+<p>Какая конкретная группа нам интересна?</p>
+</div>
+
+<div class="flow-card">
+<strong>Persona</strong>
+<p>Как выглядит типичный представитель?</p>
+</div>
+
+<div class="flow-card">
+<strong>Потребности</strong>
+<p>Что ему нужно и что мешает?</p>
+</div>
+
+</div>
+
+<div class="flow">
+
+<div class="flow-card">
+<strong>Мотивация</strong>
+</div>
+
+<div class="flow-card">
+<strong>Поведение</strong>
+</div>
+
+<div class="flow-card">
+<strong>Путь пользователя</strong>
+</div>
+
+<div class="flow-card">
+<strong class="red">Предложение</strong>
+</div>
+
+</div>
+
+<div class="card soft">
+
+<strong>Главная мысль</strong>
+
+<p style="font-size:20px;color:var(--text)">
+Хороший маркетинг начинается не с вопроса
+«где разместить рекламу?», а с вопроса
+<strong>«кто наш пользователь и что ему нужно?»</strong>
+</p>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 16 ================= -->
+
+<section class="slide">
+
+<div class="container">
+
+<div class="label">Итоги</div>
+
+<h2>Что нужно запомнить?</h2>
+
+<div class="grid">
+
+<div class="card">
+<div class="number-big">01</div>
+<h3>Целевая аудитория</h3>
+<p>
+Это конкретная группа людей,
+для которых предназначен продукт.
+</p>
+</div>
+
+<div class="card">
+<div class="number-big">02</div>
+<h3>Сегментация</h3>
+<p>
+Помогает разделить большую аудиторию
+на понятные группы.
+</p>
+</div>
+
+<div class="card">
+<div class="number-big">03</div>
+<h3>Persona</h3>
+<p>
+Помогает представить типичного пользователя.
+</p>
+</div>
+
+<div class="card">
+<div class="number-big">04</div>
+<h3>AIDA</h3>
+<p>
+Показывает движение пользователя
+от внимания к действию.
+</p>
+</div>
+
+<div class="card">
+<div class="number-big">05</div>
+<h3>Карта эмпатии</h3>
+<p>
+Помогает понять мысли, чувства
+и действия пользователя.
+</p>
+</div>
+
+<div class="card soft">
+<div class="number-big">06</div>
+<h3>Главный принцип</h3>
+<p>
+Сначала понимаем пользователя —
+потом создаём предложение.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+
+<!-- ================= SLIDE 17 ================= -->
+
+<section class="slide homework">
+
+<div class="container">
+
+<div class="label">Домашнее задание</div>
+
+<h2>
+Проанализируйте<br>
+<span style="color:var(--red2)">целевую аудиторию</span>
+своего продукта
+</h2>
+
+<p class="lead">
+Используйте тот же продукт,
+который вы выбрали при разработке стратегии
+интернет-маркетинга.
+</p>
+
+<div class="hw">
+
+<div class="hw-row">
+<div class="hw-number">01</div>
+<div>
+<strong>Назовите продукт</strong>
+<p>Что вы продвигаете?</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">02</div>
+<div>
+<strong>Опишите общую аудиторию</strong>
+<p>Кто потенциально может пользоваться продуктом?</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">03</div>
+<div>
+<strong>Выделите 2–3 сегмента</strong>
+<p>Разделите аудиторию на группы.</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">04</div>
+<div>
+<strong>Выберите основной сегмент</strong>
+<p>Объясните свой выбор.</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">05</div>
+<div>
+<strong>Создайте Persona</strong>
+<p>Возраст · цели · проблемы · потребности · мотивация · страхи.</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">06</div>
+<div>
+<strong>Сделайте карту эмпатии</strong>
+<p>Думает · чувствует · видит · слышит · говорит · делает.</p>
+</div>
+</div>
+
+<div class="hw-row">
+<div class="hw-number">07</div>
+<div>
+<strong>Опишите путь пользователя</strong>
+<p>Проблема → поиск → сравнение → решение → действие.</p>
+</div>
+</div>
+
+</div>
+
+<p style="margin-top:18px;font-size:14px;color:#92969d">
+Формат: Word / Google Docs ·
+Файл: Фамилия_Имя_Целевая_аудитория
+</p>
+
+</div>
+</section>
+
+</div>
+
+
+<!-- NAVIGATION -->
+
+<div class="nav">
+
+<button onclick="prevSlide()">←</button>
+
+<div class="counter">
+<span id="current">1</span>
+&nbsp;/&nbsp;
+<span id="total">17</span>
+</div>
+
+<button onclick="nextSlide()">→</button>
+
+</div>
+
+<div class="progress">
+<div class="progress-bar" id="progress"></div>
+</div>
+
+
+<script>
+
+const slides = document.querySelectorAll(".slide");
+
+let currentSlide = 0;
+
+const total = slides.length;
+
+document.getElementById("total").textContent = total;
+
+
+function showSlide(index){
+
+    if(index < 0) index = total - 1;
+    if(index >= total) index = 0;
+
+    slides.forEach((slide,i)=>{
+
+        slide.classList.remove("active");
+        slide.classList.remove("prev");
+
+        if(i < index){
+            slide.classList.add("prev");
+        }
+
+    });
+
+    slides[index].classList.add("active");
+
+    currentSlide = index;
+
+    document.getElementById("current").textContent = index + 1;
+
+    const progress =
+        ((index + 1) / total) * 100;
+
+    document.getElementById("progress").style.width =
+        progress + "%";
+}
+
+
+function nextSlide(){
+    showSlide(currentSlide + 1);
+}
+
+
+function prevSlide(){
+    showSlide(currentSlide - 1);
+}
+
+
+/* КЛАВИАТУРА */
+
+document.addEventListener("keydown",(e)=>{
+
+    if(e.key === "ArrowRight" ||
+       e.key === " " ||
+       e.key === "PageDown"){
+
+        e.preventDefault();
+        nextSlide();
+    }
+
+    if(e.key === "ArrowLeft" ||
+       e.key === "PageUp"){
+
+        e.preventDefault();
+        prevSlide();
+    }
+
+});
+
+
+/* СВАЙП НА ТЕЛЕФОНЕ */
+
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener("touchstart",(e)=>{
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener("touchend",(e)=>{
+    touchEndX = e.changedTouches[0].screenX;
+
+    if(touchEndX < touchStartX - 50){
+        nextSlide();
+    }
+
+    if(touchEndX > touchStartX + 50){
+        prevSlide();
+    }
+});
+
+
+/* КЛИК ПО КРАЯМ ЭКРАНА */
+
+document.addEventListener("click",(e)=>{
+
+    if(
+        e.target.closest(".nav") ||
+        e.target.closest("button") ||
+        e.target.closest(".card")
+    ) return;
+
+    if(e.clientX > window.innerWidth * .75){
+        nextSlide();
+    }
+
+    if(e.clientX < window.innerWidth * .25){
+        prevSlide();
+    }
+
+});
+
+
+showSlide(0);
+
+</script>
+
+</body>
+</html>
